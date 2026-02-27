@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_BeltIndexer" Id="{312e5baf-49ca-44e6-86c3-7b11c07dd4f5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_BeltIndexer EXTENDS FB_PackML_BaseModule
+VAR
+	BeltAxis	: FB_Component_BasicAxis;
+
+	TouchProbe			: MC_TouchProbe;
+	TouchProbeConfig	: TRIGGER_REF;
+	fbFifo 				: FB_DataSetFifo := ( bOverwrite := TRUE );
+	arrBuffer 			: ARRAY[0..MAX_BUFFER_SIZE] OF BYTE; (* Buffer memory used by FB_MemRingBuffer function block *)
+
+	NewRecordedPosition	: LREAL;
+	OldRecordedPosition	: LREAL;
+
+	TON_Dwell	: TON;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Acting States" Id="{372275a6-479e-4f90-ad27-976f2360b781}" />
+    <Folder Name="Waiting States" Id="{144bd068-4e2c-4410-ba42-2c64c81b1f45}" />
+    <Method Name="Aborting" Id="{c581ca5a-a6d0-4671-8620-5b0db76edc9b}" FolderPath="Acting States\">
+      <Declaration><![CDATA[//! @summary This method contains code which will execute when this PackML module is in the <b>Aborting</b> state
+METHOD PROTECTED Aborting
+VAR
+	i				: UDINT;
+	SubModulesReady : BOOL := TRUE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE DescendantSequenceState OF
+	0:
+		NoStateTasksToComplete := FALSE;
+		DescendantSequenceState := DescendantSequenceState + 10;
+
+	10:
+		IF BeltAxis.Disable() THEN
+			TouchProbe.Execute		:= FALSE;
+			NewRecordedPosition		:= 0;
+			OldRecordedPosition		:= 0;
+			StateTasksComplete 		:= TRUE;
+			DescendantSequenceState := DescendantSequenceState + 10;
+		END_IF
+
+	//20:	
+
+	20:
+		StateTasksComplete := TRUE;
+END_CASE
+
+SUPER^.Aborting();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Clearing" Id="{388ae9dc-80f0-4516-8fe6-40da9d15ee2e}" FolderPath="Acting States\">
+      <Declaration><![CDATA[//! @summary This method contains code which will execute when this PackML module is in the <b>Clearing</b> state
+METHOD PROTECTED Clearing
+VAR
+	i				: UDINT;
+	SubModulesReady : BOOL := TRUE;
+END_VAR
+
+VAR_INST
+
+END_VAR
+
+(*! <description> <b>Note:</b> The <i>Clear</i> command can also be thought of as a <i>fault reset</i> depite the ambiguity in the naming of the <i>Reset</i> state. 
+<table> 
+	<tr>
+		<th> Previous State </th>
+		<th> Transition In </th>
+		<th> Transition Out </th>
+		<th> Next State  </th> 
+	</tr>
+	<tr>
+		<td> Aborted </td>
+		<td> Clear Command </td> 
+		<td> State Complete </td>
+		<td> Stopped </td> 
+	</tr>
+</table>
+This method is called as required by <c>StateControl()</c>
+</description> 
+
+*)]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// CASE _CurrentMode OF
+// 	E_PMLUnitMode.ePMLUnitMode_Production:
+		CASE DescendantSequenceState OF
+			0: //Init
+				NoStateTasksToComplete := FALSE;
+
+				//Reset Axes and  CA Group
+				BeltAxis.Reset();
+				DescendantSequenceState := DescendantSequenceState + 10;
+
+			10: // Done	
+				StateTasksComplete := TRUE;
+		END_CASE
+
+// END_CASE
+
+SUPER^.Clearing();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CyclicLogic" Id="{f20ba09a-40e8-4735-984b-a1d228c0b3e7}">
+      <Declaration><![CDATA[METHOD CyclicLogic
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[SUPER^.CyclicLogic();
+
+TouchProbe(Axis := BeltAxis.Axis, TriggerInput := TouchProbeConfig);
+fbFifo();
+TON_Dwell();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Execute" Id="{f55be0fa-0045-493d-9bed-130a86663028}" FolderPath="Waiting States\">
+      <Declaration><![CDATA[//! @summary This method contains code which will execute when this PackML module is in the <b>Execute</b> state
+METHOD PROTECTED Execute
+VAR
+	i : UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[(*CASE _CurrentMode OF
+	E_PMLUnitMode.ePMLUnitMode_Production:
+
+
+	E_PMLUnitMode.ePMLUnitMode_Manual:
+		; //Insert logic for Manual Mode here
+END_CASE	*)
+
+CASE DescendantSequenceState OF
+	0:	// Start Moving
+		BeltAxis.MoveVelocity(250, TRUE);
+		TouchProbe.Execute		:= TRUE;
+		DescendantSequenceState	:= DescendantSequenceState + 10;
+
+	10: // Start buffering positions and moving to them
+		IF fbFifo.nCount > 0 THEN
+			fbFifo.A_Get(out => OldRecordedPosition);
+			BeltAxis.MoveAbsolute(OldRecordedPosition + 440.0, TRUE);
+			DescendantSequenceState	:= DescendantSequenceState + 10;
+		END_IF
+		
+	20: // Look for trigger
+		IF ton_dwell.Q THEN
+			TON_Dwell.IN			:= FALSE;
+			fbFifo.A_Remove();
+			IF fbFifo.nCount > 0 THEN
+				DescendantSequenceState	:= 10;
+			ELSE
+				DescendantSequenceState	:= 0;
+			END_IF
+		ELSIF BeltAxis.InPosition AND (ABS(BeltAxis.SetPosition - (OldRecordedPosition + 440)) < 1) THEN
+			Ton_Dwell.IN	:= TRUE;
+		END_IF
+
+END_CASE
+
+IF TouchProbe.Done THEN
+	NewRecordedPosition	:= TouchProbe.RecordedData.AbsolutePosition;
+	fbFifo.A_Add(In := NewRecordedPosition);
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Initialize" Id="{e9b50b33-6b87-4931-b368-dcf07835379b}" FolderPath="Acting States\">
+      <Declaration><![CDATA[(* Basic module initialization logic*)
+METHOD PROTECTED Initialize : BOOL]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Initialize := FALSE;
+CASE DescendantSequenceState OF
+	0:
+		RegisterComponent(Component := BeltAxis);
+		DescendantSequenceState := DescendantSequenceState + 10;
+
+	10: // Touch Probe Configuration
+		TouchProbeConfig.SignalSource	:= SignalSource_DriveDefined;
+		TouchProbeconfig.Mode			:= TOUCHPROBEMODE_CONTINOUS;
+		TON_Dwell.PT					:= T#500ms;
+		DescendantSequenceState 		:= DescendantSequenceState + 10;
+
+	20:
+		IF SUPER^.Initialize() THEN
+			DescendantSequenceState := DescendantSequenceState + 10;
+		END_IF
+
+	30:
+		Initialize := TRUE;
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Resetting" Id="{0e3ef7de-5097-4916-86e1-86ae49543d17}" FolderPath="Acting States\">
+      <Declaration><![CDATA[METHOD PROTECTED Resetting
+VAR_INST
+	i			 : UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// CASE _CurrentMode OF
+// 	E_PMLUnitMode.ePMLUnitMode_Production:
+		CASE DescendantSequenceState OF
+			0: //Init
+				i					   := 1;
+				NoStateTasksToComplete := FALSE;
+				DescendantSequenceState := DescendantSequenceState + 10;
+
+			10: //Enable Axes
+				IF BeltAxis.Enable() THEN
+					DescendantSequenceState := DescendantSequenceState + 10;
+				END_IF
+
+			20:	// Home Axis
+				IF BeltAxis.Home() THEN
+					DescendantSequenceState := DescendantSequenceState + 10;
+				END_IF
+	
+			30: // Clear Buffer
+				fbFifo.A_Reset();
+				DescendantSequenceState := DescendantSequenceState + 10;
+
+			40: //Clearing complete
+				StateTasksComplete := TRUE;
+
+		END_CASE
+// END_CASE
+
+SUPER^.Resetting();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Starting" Id="{de278ca1-f652-4bea-bf28-831a085e3f4f}" FolderPath="Acting States\">
+      <Declaration><![CDATA[METHOD PROTECTED Starting
+VAR_INST
+	i		  : UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//CASE _CurrentMode OF
+//	E_PMLUnitMode.ePMLUnitMode_Production:
+		CASE DescendantSequenceState OF
+			0:
+				NoStateTasksToComplete	:= FALSE;
+				DescendantSequenceState := 10;
+				i						:= 1;
+
+			10: //Set Axis Parameters
+				BeltAxis.Velocity		:= 500;
+				BeltAxis.Acceleration	:= 1000;
+				BeltAxis.Deceleration	:= 1000;
+				BeltAxis.Jerk			:= 10000;
+				DescendantSequenceState := DescendantSequenceState + 10;
+
+			20: // Start Touchprobe and clear buffer
+				TouchProbe.WindowOnly		:= FALSE;
+				TouchProbeConfig.EncoderID	:= 4;
+				DescendantSequenceState 	:= DescendantSequenceState + 10;
+				
+			30: // Finsihed
+				StateTasksComplete 		:= TRUE;
+
+		END_CASE
+
+	//E_PMLUnitMode.ePMLUnitMode_Manual:
+//END_CASE
+
+SUPER^.Starting();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

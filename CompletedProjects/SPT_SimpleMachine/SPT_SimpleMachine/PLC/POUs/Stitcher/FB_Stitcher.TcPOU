@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Stitcher" Id="{eaa0e39f-7ef7-419e-82de-15dedb2dede8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Stitcher EXTENDS FB_PackML_BaseModule
+VAR
+	VMaster		: FB_Component_BasicAxis;
+	VSlave		: FB_Component_CamSlaveAxis;
+	Dereeler	: FB_Component_CamSlaveAxis;
+	Prefeeder	: FB_Component_CamSlaveAxis;
+	StripfeedX	: FB_Component_CamSlaveAxis;
+	StripfeedY	: FB_Component_CamSlaveAxis;
+	LiftX		: FB_Component_CamSlaveAxis;
+	LiftY		: FB_Component_CamSlaveAxis;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Acting States" Id="{1ae6f51c-695c-44fe-aa96-ab35ce3cb68a}" />
+    <Folder Name="Waiting States" Id="{36388fc6-4a11-4d56-8736-206bc94a647d}" />
+    <Method Name="Aborting" Id="{2b2c8dbd-dc12-4137-b300-db0979a84380}" FolderPath="Acting States\">
+      <Declaration><![CDATA[//! @summary This method contains code which will execute when this PackML module is in the <b>Aborting</b> state
+METHOD PROTECTED Aborting
+VAR
+	i				: UDINT;
+	SubModulesReady : BOOL := TRUE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE DescendantSequenceState OF
+	0:
+		NoStateTasksToComplete := FALSE;
+		DescendantSequenceState := DescendantSequenceState + 10;
+
+	10:
+		IF VMaster.Disable()		AND
+			VSlave.Disable()		AND
+			Dereeler.Disable()		AND		
+			Prefeeder.Disable()		AND	
+			StripfeedX.Disable()	AND	
+			StripfeedY.Disable()	AND     
+			LiftX.Disable()			AND	
+			LiftY.Disable()			THEN
+				DescendantSequenceState := DescendantSequenceState + 10;	20:
+			END_IF		
+
+	20:	
+		StateTasksComplete := TRUE;
+
+END_CASE
+
+SUPER^.Aborting();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Clearing" Id="{46243204-655a-4ea4-894f-3e1e2017833f}" FolderPath="Acting States\">
+      <Declaration><![CDATA[//! @summary This method contains code which will execute when this PackML module is in the <b>Clearing</b> state
+METHOD PROTECTED Clearing
+VAR
+	i				: UDINT;
+	SubModulesReady : BOOL := TRUE;
+END_VAR
+
+VAR_INST
+
+END_VAR
+
+(*! <description> <b>Note:</b> The <i>Clear</i> command can also be thought of as a <i>fault reset</i> depite the ambiguity in the naming of the <i>Reset</i> state. 
+<table> 
+	<tr>
+		<th> Previous State </th>
+		<th> Transition In </th>
+		<th> Transition Out </th>
+		<th> Next State  </th> 
+	</tr>
+	<tr>
+		<td> Aborted </td>
+		<td> Clear Command </td> 
+		<td> State Complete </td>
+		<td> Stopped </td> 
+	</tr>
+</table>
+This method is called as required by <c>StateControl()</c>
+</description> 
+
+*)]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// CASE _CurrentMode OF
+// 	E_PMLUnitMode.ePMLUnitMode_Production:
+		CASE DescendantSequenceState OF
+			0: //Init
+				NoStateTasksToComplete := FALSE;
+
+				//Reset Axes and  CA Group
+				VMaster.Reset();
+				VSlave.Reset();
+				Dereeler.Reset();
+				Prefeeder.Reset();
+				StripfeedX.Reset();
+				StripfeedY.Reset();
+				LiftX.Reset();
+				DescendantSequenceState := DescendantSequenceState + 10;
+
+			10: // Done	
+				StateTasksComplete := TRUE;
+		END_CASE
+
+// END_CASE
+
+SUPER^.Clearing();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CyclicLogic" Id="{34b87349-7e95-4513-8979-239a95ca1372}">
+      <Declaration><![CDATA[METHOD CyclicLogic
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[SUPER^.CyclicLogic();
+
+// If you add other function blocks that aren't registered to this equipment module, this is where 
+// you want to call the FB (or call its cyclic logic method, whichever applicable)]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Execute" Id="{653d0f28-16e2-4e4d-890a-179684dfe360}" FolderPath="Waiting States\">
+      <Declaration><![CDATA[//! @summary This method contains code which will execute when this PackML module is in the <b>Execute</b> state
+METHOD PROTECTED Execute
+VAR
+	i : UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[(*CASE _CurrentMode OF
+	E_PMLUnitMode.ePMLUnitMode_Production:
+
+
+	E_PMLUnitMode.ePMLUnitMode_Manual:
+		; //Insert logic for Manual Mode here
+END_CASE	*)
+
+CASE DescendantSequenceState OF
+	// Your running logic goes here
+
+END_CASE
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Initialize" Id="{6367147b-c8d5-4889-9058-be2f192c39c3}" FolderPath="Acting States\">
+      <Declaration><![CDATA[(* Basic module initialization logic*)
+METHOD PROTECTED Initialize : BOOL]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Initialize := FALSE;
+CASE DescendantSequenceState OF
+	0:
+		RegisterComponent(Component := VMaster);
+		RegisterComponent(Component := VSlave);
+		RegisterComponent(Component := Dereeler);
+		RegisterComponent(Component := Prefeeder);
+		RegisterComponent(Component := StripfeedX);
+		RegisterComponent(Component := StripfeedY);
+		RegisterComponent(Component := LiftX);
+		RegisterComponent(Component := LiftY);
+		DescendantSequenceState := DescendantSequenceState + 10;
+
+	10:
+		IF SUPER^.Initialize() THEN
+			DescendantSequenceState := DescendantSequenceState + 10;
+		END_IF
+
+	20:
+		Initialize := TRUE;
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Resetting" Id="{9fd6f050-d0d3-43bb-9624-ff5b1e36dc35}" FolderPath="Acting States\">
+      <Declaration><![CDATA[METHOD PROTECTED Resetting
+VAR_INST
+	i			 : UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// CASE _CurrentMode OF
+// 	E_PMLUnitMode.ePMLUnitMode_Production:
+		CASE DescendantSequenceState OF
+			0: //Init
+				i					   := 1;
+				NoStateTasksToComplete := FALSE;
+				DescendantSequenceState := DescendantSequenceState + 10;
+
+			10: //Enable Axes
+			IF VMaster.Enable()		AND
+				VSlave.Enable()		AND
+				Dereeler.Enable()	AND		
+				Prefeeder.Enable()	AND	
+				StripfeedX.Enable()	AND	
+				StripfeedY.Enable()	AND     
+				LiftX.Enable()		AND	
+				LiftY.Enable()		THEN
+					DescendantSequenceState := DescendantSequenceState + 10;
+			END_IF	
+
+			// Axis homing here maybe?
+			20: // note you can break it up into many steps, home groups of axes together, 1 at a time, etc
+
+
+			30: //Clearing complete
+				StateTasksComplete := TRUE;
+
+		END_CASE
+// END_CASE
+
+SUPER^.Resetting();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Starting" Id="{837ddb29-6b14-40c0-bee8-69178d00ce0c}" FolderPath="Acting States\">
+      <Declaration><![CDATA[METHOD PROTECTED Starting
+VAR_INST
+	i		  : UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//CASE _CurrentMode OF
+//	E_PMLUnitMode.ePMLUnitMode_Production:
+		CASE DescendantSequenceState OF
+			0:
+				NoStateTasksToComplete	:= FALSE;
+				DescendantSequenceState := 10;
+				i						:= 1;
+
+			10: //Set Axis Parameters - note this example just shows one axis dynamics init
+				VMaster.Velocity		:= 250;
+				VMaster.Acceleration	:= 1000;
+				VMaster.Deceleration	:= 1000;
+				VMaster.Jerk			:= 10000;
+				DescendantSequenceState := DescendantSequenceState + 10;
+				StateTasksComplete 		:= TRUE;
+
+			20: //Cleanup mover queues
+				DescendantSequenceState := DescendantSequenceState + 10;
+
+		END_CASE
+
+	//E_PMLUnitMode.ePMLUnitMode_Manual:
+//END_CASE
+
+SUPER^.Starting();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

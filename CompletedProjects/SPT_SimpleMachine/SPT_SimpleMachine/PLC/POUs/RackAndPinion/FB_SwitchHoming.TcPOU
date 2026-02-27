@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_SwitchHoming" Id="{6cba173b-6846-48ee-9db1-475d58063724}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_SwitchHoming IMPLEMENTS I_MotionSequence
+VAR_INPUT
+	HomingParameter	: MC_HomingParameter;
+END_VAR
+VAR_OUTPUT
+	State	: UINT;
+END_VAR
+VAR
+	diHomeSwitch	AT %I* : BOOL;
+	doHomeSwitch	AT %Q* : BOOL := TRUE;
+	validaxisref	: BOOL := FALSE;
+	_Axis			: SPT_Motion_Control.I_BasicAxis;
+	Home			: MC_Home;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Axis" Id="{a3a1b938-cb76-468b-986b-717edf4e6395}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY Axis : SPT_Motion_Control.I_BasicAxis
+]]></Declaration>
+      <Get Name="Get" Id="{d0c686b8-36c9-4819-99c3-bc060ce836d4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Axis	:= _Axis;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{d321e3e3-5950-4d70-ba9a-a5c1172b9dd4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Axis	:= Axis;
+validaxisref	:= TRUE;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Busy" Id="{019f1f96-8c2b-4fe6-94c4-92fc90967329}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY Busy : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{1312500b-8109-485b-9bec-228604416438}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="CyclicLogic" Id="{8eb2b983-7c4a-41b5-9333-dc0e7dfec0a3}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD CyclicLogic]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF validaxisref THEN
+	Home.bCalibrationCam	:= diHomeSwitch;
+	Home(Axis := _Axis.Axis);
+
+END_IF
+
+IF NOT Home.Execute	THEN
+	State	:= 0;
+END_IF
+Home.Execute	:= FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Error" Id="{ac6eaf90-008b-4873-b53b-df509f1d654c}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY Error : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{dcad8511-7533-46ac-87e5-607cfb2d9194}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ErrorID" Id="{abd6fe9d-9a72-4974-8125-4aba519d27be}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY ErrorID : UDINT
+]]></Declaration>
+      <Get Name="Get" Id="{c1289d1e-9738-49aa-af94-7c8be41b2db6}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Execute" Id="{5cc5614b-803d-45d5-b1f5-18dc23f621b1}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD Execute : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Home.Execute					:= TRUE;
+Home.Position					:= 39;
+Home.HomingMode					:= MC_DefaultHoming;
+Home.Options.SearchVelocity		:= 50;
+Home.Options.SearchDirection	:= MC_Negative_Direction;
+
+// return true when done
+Execute	:= Home.Done;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="InitComplete" Id="{636bfefc-5a41-493e-9693-11a02231145e}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY InitComplete : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{031192f9-9823-4747-9e4d-9adf5bd436d8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

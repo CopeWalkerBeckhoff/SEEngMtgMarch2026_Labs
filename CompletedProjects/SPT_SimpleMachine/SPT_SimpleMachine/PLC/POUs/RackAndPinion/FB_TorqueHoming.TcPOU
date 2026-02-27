@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_TorqueHoming" Id="{8665c3d2-bf0c-4026-828d-3a6c1af0d2d4}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_TorqueHoming IMPLEMENTS I_MotionSequence
+VAR_INPUT
+	HomingParameter	: MC_HomingParameter;
+END_VAR
+VAR_OUTPUT
+	State	: UINT;
+END_VAR
+VAR
+	validaxisref	: BOOL := FALSE;
+	_Axis			: SPT_Motion_Control.I_BasicAxis;
+	StepBlockHoming	: MC_StepBlock;
+	FinishHoming	: MC_FinishHoming;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Axis" Id="{ce7ddcd7-a24c-44ce-a197-79ed025f0266}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY Axis : SPT_Motion_Control.I_BasicAxis
+]]></Declaration>
+      <Get Name="Get" Id="{ee5978fc-6db0-47d0-bf7b-66f657669414}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Axis	:= _Axis;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{7871370c-af19-4399-88c9-546ecfb850e3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Axis	:= Axis;
+validaxisref	:= TRUE;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Busy" Id="{bcc66d89-b006-4000-9eaf-72f5df4926af}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY Busy : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{5a6342ce-618b-4376-95ad-6d7175a36ddd}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="CyclicLogic" Id="{617f8f24-dcd7-4e7f-a50b-b4af9cb7f9be}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD CyclicLogic]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF validaxisref THEN
+	StepBlockHoming(Axis := _Axis.Axis, Parameter := HomingParameter);
+	FinishHoming(Axis := _Axis.Axis, Parameter := HomingParameter);
+END_IF
+
+IF NOT StepBlockHoming.Execute	THEN
+	State	:= 0;
+END_IF
+StepBlockHoming.Execute	:= FALSE;
+FinishHoming.Execute	:= FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Error" Id="{324fa168-60ab-4fd7-af73-9b0da634127c}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY Error : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{a4443b59-1e91-49a7-a81f-43d7f447c11f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ErrorID" Id="{324491a6-6be9-4f33-bd0d-4dcc94590cbf}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY ErrorID : UDINT
+]]></Declaration>
+      <Get Name="Get" Id="{4e908018-6175-4ca1-88b3-a2506d2b328d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Execute" Id="{11e7ed60-456b-420c-8b37-8c55f11f17a6}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD Execute : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[StepBlockHoming.Execute					:= TRUE;
+StepBlockHoming.SetPosition				:= 472;
+StepBlockHoming.Direction				:= mcPositiveDirection;
+StepBlockHoming.Velocity				:= 50;
+StepBlockHoming.Acceleration			:= 1000;
+StepBlockHoming.Deceleration			:= 1000;
+StepBlockHoming.Jerk					:= 10000;
+StepBlockHoming.DetectionVelocityLimit	:= 1;
+StepBlockHoming.DetectionVelocityTime	:= T#100MS;
+StepBlockHoming.TimeLimit				:= T#10S;
+StepBlockHoming.DistanceLimit			:= 500;
+StepBlockHoming.TorqueLimit				:= 50;
+StepBlockHoming.TorqueTolerance			:= 5;
+
+FinishHoming.Execute		:= StepBlockHoming.Done;
+FinishHoming.Distance		:= -0.5;
+FinishHoming.Velocity		:= 100;
+FinishHoming.Acceleration	:= 1000;
+FinishHoming.Deceleration	:= 1000;
+FinishHoming.Jerk			:= 1000;
+
+// return true when done
+Execute	:= StepBlockHoming.Done AND FinishHoming.Done;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="InitComplete" Id="{ef1a97c1-38d9-49bf-8065-205d4a220841}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY InitComplete : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{d312255a-447f-4543-a629-2118cc7c6094}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

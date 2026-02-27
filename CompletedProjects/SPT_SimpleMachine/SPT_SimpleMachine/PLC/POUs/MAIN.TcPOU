@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="MAIN" Id="{21562df5-f06a-43f1-9335-ae6229d9d3e3}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	Machine : Machine := (Name := 'Machine');
+
+	InitComplete	: BOOL;
+
+	//Control Source for running machine
+	ControlSourceHMI : FB_ControlSource;
+	ControlSourcePB	 : FB_ControlSource;
+
+	SafetyGroupAutoReset	: FB_SafetyResetPulse;
+	SafetyGroup_Main    	: FB_Component_Safety_Group :=(Name := 'Safety Group Main', SafetyReset := SafetyGroupAutoReset, AutoResetConnectionFaults := TRUE);
+	SafetyEstop  			: FB_Component_Safety_EstopFB  :=(Name := 'E-Stop',DependenceFB := SafetyGroup_Main,SafetyReset := SafetyGroupAutoReset);
+	SafetyFBReset	AT %Q*	: BOOL;
+	SafetyOK		AT %I*	: BOOL;
+	TONSafetyFBReset		: TON;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*All sample code provided by Beckhoff Automation LLC are for illustrative purposes only and are provided “as is” and without any warranties, express or implied. Actual implementations in applications will vary significantly. Beckhoff Automation LLC shall have no liability for, and does not waive any rights in relation to, any code samples that it provides or the use of such code samples for any purpose.*)
+
+(*
+	This example is the smallest possible implementation of the the framework. 
+	By calling the CyclicLogic of Machine everything inside the framework that is needed to control the statemachine and log the existing events is being processed.
+	
+	The HMIPermissions method is required to allow the Visu to control the state machine through the PackMLBaseModule_HMI structure.
+	
+	All libraries in this project are pinned at V4.x
+	While only the SPT Base Types library is used, the others are provided for your convenience.
+	
+*)
+
+// For Debug Only
+_AppInfo.KeepOutputsOnBP := TRUE;
+
+IF NOT InitComplete THEN
+	Initialize();
+END_IF
+
+Machine.CyclicLogic();
+ControlSourcePB.CyclicLogic();
+ControlSourceHMI.CyclicLogic();
+TwinSAFE();
+
+]]></ST>
+    </Implementation>
+    <Method Name="Initialize" Id="{5f3ad087-10ca-4e89-af79-9e5cd1d9cb55}">
+      <Declaration><![CDATA[METHOD Initialize : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT ControlSourceHMI.Registered THEN
+	Machine.RegisterExternalController(ControlSourceHMI);
+END_IF
+
+IF NOT ControlSourcePB.Registered THEN
+	Machine.RegisterExternalController(ControlSourcePB);
+END_IF
+
+//ADSLOGSTR(ADSLOG_MSGTYPE_WARN, 'Lag Monitoring disabled', 'For simulation demo only',);
+InitComplete := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TwinSAFE" Id="{92fe68ec-d986-449c-94dc-6d435b49f8cd}">
+      <Declaration><![CDATA[METHOD TwinSAFE
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Safety Calls
+SafetyGroupAutoReset.CyclicLogic();
+SafetyGroup_Main.CyclicLogic();
+SafetyEstop.CyclicLogic();
+TONSafetyFBReset(IN	:= TRUE, PT := T#2S);
+IF TONSafetyFBReset.Q THEN
+	TONSafetyFBReset(IN := FALSE);
+	SafetyFBReset	:= TRUE;
+ELSE
+	SafetyFBReset	:= FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

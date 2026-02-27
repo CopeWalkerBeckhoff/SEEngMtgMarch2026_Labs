@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Name>Drive Manager 2</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7766e11e-a526-4e6e-9056-7f5f98569348}</ProjectGuid>
+    <TcPath>..\SPT_SimpleMachine\SPT_SimpleMachine.tsproj</TcPath>
+    <AssemblyName>TwinCAT Drive Manager 2 Project1</AssemblyName>
+    <RootNamespace>TwinCAT Drive Manager 2 Project1</RootNamespace>
+    <SaveDriveDataAsFiles>False</SaveDriveDataAsFiles>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Term 9 %28AX8620-0000-0103%29.tcdmdrv">
+      <SubType>Content</SubType>
+      <IoItemPathName>TIID^Device 3 (EtherCAT)^Term 9 (AX8620-0000-0103)</IoItemPathName>
+    </Content>
+    <Content Include="Term 9 %28AX8620-0000-0103%29\Drive 10 %28AX8206-0200-0106%29.tcdmdrv">
+      <SubType>Content</SubType>
+      <DependentUpon>Term 9 (AX8620-0000-0103).tcdmdrv</DependentUpon>
+      <IoItemPathName>TIID^Device 3 (EtherCAT)^Term 9 (AX8620-0000-0103)^Drive 10 (AX8206-0200-0106)</IoItemPathName>
+    </Content>
+    <Content Include="Term 9 %28AX8620-0000-0103%29\Drive 11 %28AX8206-0200-0106%29.tcdmdrv">
+      <SubType>Content</SubType>
+      <DependentUpon>Term 9 (AX8620-0000-0103).tcdmdrv</DependentUpon>
+      <IoItemPathName>TIID^Device 3 (EtherCAT)^Term 9 (AX8620-0000-0103)^Drive 11 (AX8206-0200-0106)</IoItemPathName>
+    </Content>
+    <Content Include="Term 9 %28AX8620-0000-0103%29\Term 12 %28AX8831-0000-0201%29.tcdmdrv">
+      <SubType>Content</SubType>
+      <DependentUpon>Term 9 (AX8620-0000-0103).tcdmdrv</DependentUpon>
+      <IoItemPathName>TIID^Device 3 (EtherCAT)^Term 9 (AX8620-0000-0103)^Term 12 (AX8831-0000-0201)</IoItemPathName>
+    </Content>
+    <Content Include="Term 9 %28AX8620-0000-0103%29\Term 12 %28AX8831-0000-0201%29\Drive 13 %28AMP8000-0030-0106%29.tcdmdrv">
+      <SubType>Content</SubType>
+      <DependentUpon>Term 9 (AX8620-0000-0103)\Term 12 (AX8831-0000-0201).tcdmdrv</DependentUpon>
+      <IoItemPathName>TIID^Device 3 (EtherCAT)^Term 9 (AX8620-0000-0103)^Term 12 (AX8831-0000-0201)^Drive 13 (AMP8000-0030-0106)</IoItemPathName>
+    </Content>
+  </ItemGroup>
+</Project>

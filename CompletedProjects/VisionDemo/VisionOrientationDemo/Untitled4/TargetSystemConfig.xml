@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TargetSystemConfig Crc="280865869" Version="1.5">
+  <TargetSystemType>HSafetyPLC</TargetSystemType>
+  <TargetSystemSubType>AMP891x</TargetSystemSubType>
+  <IsExternalDevice>false</IsExternalDevice>
+  <TargetSystemObjectId>50462733</TargetSystemObjectId>
+  <TargetSystemObjectName>Drive 13 (AMP8000-0030-0106)</TargetSystemObjectName>
+  <SoftwareVersion>01 (V01.03)     </SoftwareVersion>
+  <SerialNumber>4311471</SerialNumber>
+  <ProjectCRC>27649</ProjectCRC>
+  <MapProjectCRC>false</MapProjectCRC>
+  <MapSerialNumber>false</MapSerialNumber>
+  <VersionNumber>1</VersionNumber>
+  <FSOEAddress>10</FSOEAddress>
+  <DipSwitch>10</DipSwitch>
+  <AmsNetID>5.151.68.96.4.1</AmsNetID>
+  <AmsPort>1005</AmsPort>
+  <ConnectionInfoDataConfigOld>false</ConnectionInfoDataConfigOld>
+  <TakeOverSafetyAliasDeviceNamesInProcessImage>false</TakeOverSafetyAliasDeviceNamesInProcessImage>
+  <TakeOverStandardAliasDeviceNamesInProcessImage>false</TakeOverStandardAliasDeviceNamesInProcessImage>
+  <BackupRestore Needed="0" Activated="false" RestoreUserAdministration="false" />
+</TargetSystemConfig>

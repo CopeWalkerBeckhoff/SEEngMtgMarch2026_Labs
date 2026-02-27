@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SafetyDeviceDesc Crc="764316371" FileFormatVersion="1.9">
+  <AliasDeviceType>
+    <Type>16</Type>
+    <SubType>0</SubType>
+    <VendorId>0</VendorId>
+  </AliasDeviceType>
+  <SDSID>15</SDSID>
+  <SafetyAliasDevice>
+    <ObjectId>0</ObjectId>
+    <LinkingMode>Manual</LinkingMode>
+    <ConnectionId>15</ConnectionId>
+    <ConnectionMode>master</ConnectionMode>
+    <ConnectionType>FSoE</ConnectionType>
+    <MapDiag>true</MapDiag>
+    <MapInputs>true</MapInputs>
+    <MapOutputs>true</MapOutputs>
+    <MapState>true</MapState>
+    <ModuleFaultIsComErr>false</ModuleFaultIsComErr>
+    <SafeAddress>0</SafeAddress>
+    <Watchdog>100</Watchdog>
+    <ComErrAck Type="Unset" />
+    <Messages InputMessageSize="0" OutputMessageSize="0" Tc2ConnectionType="0" />
+  </SafetyAliasDevice>
+</SafetyDeviceDesc>

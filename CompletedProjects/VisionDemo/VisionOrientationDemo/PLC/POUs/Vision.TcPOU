@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Vision" Id="{252271fb-6a71-407e-8f09-23cd75440a88}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Vision
+VAR
+	VisionBase	: FB_VisionCameraBase;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[VisionBase.]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

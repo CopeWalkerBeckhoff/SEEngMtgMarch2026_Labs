@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_RackAndPinion" Id="{448371c6-13eb-43c4-a0ce-ebb192d17413}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_RackAndPinion EXTENDS FB_PackML_BaseModule
+VAR
+	LeftAxis	: FB_Component_BasicAxis;
+	RightAxis	: FB_Component_BasicAxis;
+
+	TorqueHoming	: FB_TorqueHoming;
+	SwitchHoming	: FB_SwitchHoming;
+
+	// CA Group
+	CAGroup			: AXES_GROUP_REF;
+	GroupReadStatus	: MC_GroupReadStatus;
+	GroupReset		: MC_GroupReset;
+	GroupEnable		: MC_GroupEnable;
+	GroupDisable	: MC_GroupDisable;
+	AddToGroup		: ARRAY[0..1] OF MC_AddAxisToGroup;
+	MoveAbsoluteCA	: ARRAY[0..1] OF MC_MoveAbsoluteCA;
+
+	TON_Dwell	: TON;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Acting States" Id="{e14cf1b1-45ff-4fb4-81b9-1f52a5d32669}" />
+    <Folder Name="Waiting States" Id="{ab86d3ba-50da-471d-864b-21041ca20d53}" />
+    <Method Name="Aborting" Id="{08b82fb7-4aad-43b5-9009-69587d93ae28}" FolderPath="Acting States\">
+      <Declaration><![CDATA[//! @summary This method contains code which will execute when this PackML module is in the <b>Aborting</b> state
+METHOD PROTECTED Aborting
+VAR
+	i				: UDINT;
+	SubModulesReady : BOOL := TRUE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE DescendantSequenceState OF
+	0:
+		NoStateTasksToComplete := FALSE;
+		DescendantSequenceState := DescendantSequenceState + 10;
+
+	10:
+		IF LeftAxis.Disable() AND RightAxis.Disable() THEN
+			StateTasksComplete 		:= TRUE;
+			DescendantSequenceState := DescendantSequenceState + 10;
+		END_IF
+
+	//20:	
+
+	20:
+		StateTasksComplete := TRUE;
+END_CASE
+
+SUPER^.Aborting();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Clearing" Id="{00b4c057-1c77-497e-ad7c-49ae2f8309bf}" FolderPath="Acting States\">
+      <Declaration><![CDATA[//! @summary This method contains code which will execute when this PackML module is in the <b>Clearing</b> state
+METHOD PROTECTED Clearing
+VAR
+	i				: UDINT;
+	SubModulesReady : BOOL := TRUE;
+END_VAR
+
+VAR_INST
+
+END_VAR
+
+(*! <description> <b>Note:</b> The <i>Clear</i> command can also be thought of as a <i>fault reset</i> depite the ambiguity in the naming of the <i>Reset</i> state. 
+<table> 
+	<tr>
+		<th> Previous State </th>
+		<th> Transition In </th>
+		<th> Transition Out </th>
+		<th> Next State  </th> 
+	</tr>
+	<tr>
+		<td> Aborted </td>
+		<td> Clear Command </td> 
+		<td> State Complete </td>
+		<td> Stopped </td> 
+	</tr>
+</table>
+This method is called as required by <c>StateControl()</c>
+</description> 
+
+*)]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// CASE _CurrentMode OF
+// 	E_PMLUnitMode.ePMLUnitMode_Production:
+		CASE DescendantSequenceState OF
+			0: //Init
+				NoStateTasksToComplete := FALSE;
+
+				//Reset Axes and  CA Group
+				LeftAxis.Reset();
+				RightAxis.Reset();
+				GroupReset.Execute	:= TRUE;
+				DescendantSequenceState := DescendantSequenceState + 10;
+
+			10: // Done	
+				GroupReset.Execute	:= FALSE;
+				StateTasksComplete := TRUE;
+		END_CASE
+
+// END_CASE
+
+SUPER^.Clearing();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CyclicLogic" Id="{f349efda-102a-4c03-85f1-b156c57de820}">
+      <Declaration><![CDATA[METHOD CyclicLogic
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[SUPER^.CyclicLogic();
+
+AddToGroup[0](Axis := LeftAxis.Axis, AxesGroup := CAGroup);
+AddToGroup[1](Axis := RightAxis.Axis, AxesGroup := CAGroup);
+GroupEnable(AxesGroup := CAGroup);
+GroupDisable(AxesGroup := CAGroup);
+GroupReadStatus.Enable		:= TRUE;
+GroupReadStatus(AxesGroup	:= CAGroup);
+GroupReset(AxesGroup	:= CAGroup);
+MoveAbsoluteCA[0](Axis := LeftAxis.Axis);
+MoveAbsoluteCA[1](Axis := RightAxis.Axis);
+TON_Dwell();
+
+TorqueHoming.CyclicLogic();
+SwitchHoming.CyclicLogic();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Execute" Id="{4a8447c7-4bba-456b-ae99-02b9655bd430}" FolderPath="Waiting States\">
+      <Declaration><![CDATA[//! @summary This method contains code which will execute when this PackML module is in the <b>Execute</b> state
+METHOD PROTECTED Execute
+VAR
+	i : UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[(*CASE _CurrentMode OF
+	E_PMLUnitMode.ePMLUnitMode_Production:
+
+
+	E_PMLUnitMode.ePMLUnitMode_Manual:
+		; //Insert logic for Manual Mode here
+END_CASE	*)
+
+CASE DescendantSequenceState OF
+	0:
+		FOR i := 0 TO 1 DO
+			MoveAbsoluteCA[i].Execute		:= TRUE;
+			MoveAbsoluteCA[i].Position		:= 50.0;
+			MoveAbsoluteCA[i].Velocity		:= leftAxis.Velocity;
+			MoveAbsoluteCA[i].Acceleration	:= LeftAxis.Acceleration;
+			MoveAbsoluteCA[i].Deceleration	:= LeftAxis.Deceleration;
+			MoveAbsoluteCA[i].Jerk			:= LeftAxis.Jerk;
+			MoveAbsoluteCA[i].Gap			:= 68.0;
+			MoveAbsoluteCA[i].Options.GapControlMode	:= MC_GAP_CONTROL_MODE.mcGapControlModeFast;
+			MoveAbsoluteCA[i].BufferMode	:= mcAborting;
+		END_FOR
+		DescendantSequenceState				:= DescendantSequenceState + 10;
+
+	10:	IF MoveAbsoluteCA[0].Done OR MoveAbsoluteCA[1].Done THEN
+			MoveAbsoluteCA[0].Execute		:= FALSE;
+			MoveAbsoluteCA[1].Execute		:= FALSE;
+			TON_Dwell.IN	:= TRUE;
+			TON_Dwell.PT	:= T#1S;
+			DescendantSequenceState			:= DescendantSequenceState + 10;
+		END_IF
+
+	20: IF TON_Dwell.Q THEN
+			ton_dwell.IN	:= FALSE;
+			DescendantSequenceState			:= DescendantSequenceState + 10;
+		END_IF
+
+	30:
+		FOR i := 0 TO 1 DO
+			MoveAbsoluteCA[i].Execute		:= TRUE;
+			MoveAbsoluteCA[i].Position		:= 450.0;
+			MoveAbsoluteCA[i].Velocity		:= leftAxis.Velocity;
+			MoveAbsoluteCA[i].Acceleration	:= LeftAxis.Acceleration;
+			MoveAbsoluteCA[i].Deceleration	:= LeftAxis.Deceleration;
+			MoveAbsoluteCA[i].Jerk			:= LeftAxis.Jerk;
+			MoveAbsoluteCA[i].Gap			:= 68.0;
+			MoveAbsoluteCA[i].Options.GapControlMode	:= MC_GAP_CONTROL_MODE.mcGapControlModeStandard;
+			MoveAbsoluteCA[i].BufferMode	:= mcAborting;
+		END_FOR
+		DescendantSequenceState				:= DescendantSequenceState + 10;
+
+	40:	IF MoveAbsoluteCA[0].Done OR MoveAbsoluteCA[1].Done THEN
+			MoveAbsoluteCA[0].Execute		:= FALSE;
+			MoveAbsoluteCA[1].Execute		:= FALSE;
+			TON_Dwell.IN	:= TRUE;
+			TON_Dwell.PT	:= T#1S;
+			DescendantSequenceState			:= DescendantSequenceState + 10;
+
+		END_IF
+
+	50: IF TON_Dwell.Q THEN
+			ton_dwell.IN	:= FALSE;
+			DescendantSequenceState			:= 0;
+		END_IF
+
+END_CASE
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Initialize" Id="{735d1fea-bfd6-4ba8-b1c5-4688da7cba47}" FolderPath="Acting States\">
+      <Declaration><![CDATA[(* Basic module initialization logic*)
+METHOD PROTECTED Initialize : BOOL]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Initialize := FALSE;
+CASE DescendantSequenceState OF
+	0:
+		RegisterComponent(Component := LeftAxis);
+		RegisterComponent(Component := RightAxis);
+		DescendantSequenceState := DescendantSequenceState + 10;
+
+	10:
+		IF SUPER^.Initialize() THEN
+			DescendantSequenceState := DescendantSequenceState + 10;
+		END_IF
+
+	20:
+		Initialize := TRUE;
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Resetting" Id="{c9015cb7-7c60-4a02-a992-009fb7a3167f}" FolderPath="Acting States\">
+      <Declaration><![CDATA[METHOD PROTECTED Resetting
+VAR_INST
+	i			 : UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// CASE _CurrentMode OF
+// 	E_PMLUnitMode.ePMLUnitMode_Production:
+		CASE DescendantSequenceState OF
+			0: //Init
+				i					   := 1;
+				NoStateTasksToComplete := FALSE;
+				DescendantSequenceState := DescendantSequenceState + 10;
+
+			10: //Enable Axes
+				IF LeftAxis.Enable() AND RightAxis.Enable() THEN
+					DescendantSequenceState := DescendantSequenceState + 10;
+				END_IF
+
+			// Add logic to home left axis to switch and right axis to hard stop
+			20: // Home Right Axis
+				TorqueHoming.Axis	:= RightAxis;
+				SwitchHoming.Axis	:= LeftAxis;
+				IF TorqueHoming.Execute() AND SwitchHoming.Execute() THEN
+					DescendantSequenceState := DescendantSequenceState + 20;
+				END_IF
+
+			30:	// Home Left Axis
+				SwitchHoming.Axis	:= LeftAxis;
+				IF SwitchHoming.Execute() THEN
+					DescendantSequenceState := DescendantSequenceState + 10;
+				END_IF
+
+			40: //Add Movers to Group			
+				AddToGroup[0].Execute		:= AddToGroup[1].Execute		:= TRUE;
+				AddToGroup[0].IdentInGroup	:= UDINT_TO_IDENTINGROUP(1);
+				AddToGroup[1].IdentInGroup	:= UDINT_TO_IDENTINGROUP(2);
+				IF AddToGroup[0].Done AND AddToGroup[1].Done THEN	
+					AddToGroup[0].Execute	:= AddToGroup[1].Execute	:= FALSE;
+					DescendantSequenceState := DescendantSequenceState + 10;
+				END_IF
+
+			50: //Enable CA Group
+				GroupEnable.Execute	:= TRUE;
+				IF GroupEnable.Done THEN
+					DescendantSequenceState := DescendantSequenceState + 10;
+				END_IF
+
+			60: //Clearing complete
+				StateTasksComplete := TRUE;
+
+		END_CASE
+// END_CASE
+
+SUPER^.Resetting();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Starting" Id="{0102240e-1ac7-403e-9ddc-852ca008333e}" FolderPath="Acting States\">
+      <Declaration><![CDATA[METHOD PROTECTED Starting
+VAR_INST
+	i		  : UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//CASE _CurrentMode OF
+//	E_PMLUnitMode.ePMLUnitMode_Production:
+		CASE DescendantSequenceState OF
+			0:
+				NoStateTasksToComplete	:= FALSE;
+				DescendantSequenceState := 10;
+				i						:= 1;
+
+			10: //Set Axis Parameters
+				LeftAxis.Velocity		:= 250;		RightAxis.Velocity		:= 250;
+				LeftAxis.Acceleration	:= 1000;	RightAxis.Acceleration	:= 1000;
+				LeftAxis.Deceleration	:= 1000;	RightAxis.Deceleration	:= 1000;
+				LeftAxis.Jerk			:= 10000;	RightAxis.Jerk			:= 10000;
+				DescendantSequenceState := DescendantSequenceState + 10;
+				StateTasksComplete 		:= TRUE;
+
+			20: //Cleanup mover queues
+				DescendantSequenceState := DescendantSequenceState + 10;
+
+		END_CASE
+
+	//E_PMLUnitMode.ePMLUnitMode_Manual:
+//END_CASE
+
+SUPER^.Starting();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
