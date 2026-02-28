@@ -5794,7 +5794,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{80907B98-0FB4-4719-894B-7FB8A4A607F3}" Name="PLC" PrjFilePath="PLC\PLC.plcproj" TmcFilePath="PLC\PLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{F3B33167-6E4D-102E-DA06-4859656F2EAD}" TmcPath="PLC\PLC.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{BB49F469-F3A5-8DE1-561A-964EE6E1AA98}" TmcPath="PLC\PLC.tmc">
 					<Name>PLC Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" ContextId="1" AreaNo="17">
@@ -6233,7 +6233,7 @@ External Setpoint Generation:
 										<CommunicationTimeout Type="System.Int32">3000</CommunicationTimeout>
 										<Visibility Type="System.String">Beginner</Visibility>
 										<ExpandedNodes Type="System.String">Root;GigE Vision;Camera Features;Device Control;Image Format Controls;Acquisition and Trigger Controls;Trigger Selector;Analog Controls;Gain Selector;User Set Control;Transfer Control;Transfer Selector;EtherCAT Control;Transport Layer Control</ExpandedNodes>
-										<SelectedNodeName Type="System.String">TriggerSource</SelectedNodeName>
+										<SelectedNodeName Type="System.String"/>
 										<useSelector Type="System.Boolean">True</useSelector>
 										<UsePacketDelayInConfigMode Type="System.Boolean">True</UsePacketDelayInConfigMode>
 									</CameraConfig>
@@ -6370,6 +6370,9 @@ External Setpoint Generation:
 										<Register Address="0x000000A4">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
+										<Register Address="0x15F90000">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
 										<Register Address="0x08F90000">
 											<RegisterValue>46-57-20-31</RegisterValue>
 										</Register>
@@ -6499,6 +6502,13 @@ External Setpoint Generation:
 										<Register Address="0x0CF90000">
 											<RegisterValue>00-00-00-01</RegisterValue>
 										</Register>
+										<Register Address="0x05F80000">
+											<RegisterValue>00-00-00-01</RegisterValue>
+										</Register>
+										<Register Address="0x05F80000">
+											<Selector SelectorName="DeviceLinkSelector">0</Selector>
+											<RegisterValue>00-00-00-01</RegisterValue>
+										</Register>
 										<Register Address="0x00009000">
 											<RegisterValue>04-00-00-00</RegisterValue>
 										</Register>
@@ -6516,6 +6526,9 @@ External Setpoint Generation:
 											<Selector SelectorName="DeviceManifestEntrySelector">1</Selector>
 											<RegisterValue>00-00-02-00</RegisterValue>
 										</Register>
+										<Register Address="0x12F80000">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
 										<Register Address="0x00000200">
 											<RegisterValue>6C-6F-63-61</RegisterValue>
 										</Register>
@@ -7410,6 +7423,18 @@ External Setpoint Generation:
 										</Register>
 										<Register Address="0x000003FC">
 											<Selector SelectorName="DeviceManifestEntrySelector">1</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x04F81400">
+											<RegisterValue>00-00-00-01</RegisterValue>
+										</Register>
+										<Register Address="0x06F81400">
+											<RegisterValue>00-00-00-01</RegisterValue>
+										</Register>
+										<Register Address="0x0AF81400">
+											<RegisterValue>00-00-00-01</RegisterValue>
+										</Register>
+										<Register Address="0x0DF81400">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
 										<Register Address="0x00000400">
@@ -8320,18 +8345,18 @@ External Setpoint Generation:
 										<Register Address="0x10F90000">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
-										<Register Address="0x11F90000">
-											<RegisterValue>12-A0-5F-20</RegisterValue>
-										</Register>
-										<Register Address="0x15F90000">
+										<Register Address="0x0EF81400">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
-										<Register Address="0x05F80000">
-											<RegisterValue>00-00-00-01</RegisterValue>
+										<Register Address="0x0EF81400">
+											<Selector SelectorName="RegionSelector">0</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
-										<Register Address="0x05F80000">
-											<Selector SelectorName="DeviceLinkSelector">0</Selector>
-											<RegisterValue>00-00-00-01</RegisterValue>
+										<Register Address="0x0FFA0208">
+											<RegisterValue>00-00-02-FF</RegisterValue>
+										</Register>
+										<Register Address="0x11F90000">
+											<RegisterValue>12-A0-5F-20</RegisterValue>
 										</Register>
 										<Register Address="0x07F80000">
 											<RegisterValue>07-5C-BB-5A</RegisterValue>
@@ -8365,6 +8390,25 @@ External Setpoint Generation:
 										</Register>
 										<Register Address="0x14F90000">
 											<Selector SelectorName="DeviceConnectionSelector">0</Selector>
+											<RegisterValue>00-00-00-01</RegisterValue>
+										</Register>
+										<Register Address="0x01F83200">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x01F93400">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x02F93400">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x0BF83200">
+											<RegisterValue>00-00-00-03</RegisterValue>
+										</Register>
+										<Register Address="0x0CF8320C">
+											<RegisterValue>00-00-00-01</RegisterValue>
+										</Register>
+										<Register Address="0x0CF8320C">
+											<Selector SelectorName="TriggerSelector">3</Selector>
 											<RegisterValue>00-00-00-01</RegisterValue>
 										</Register>
 										<Register Address="0x16F90000">
@@ -8401,12 +8445,25 @@ External Setpoint Generation:
 										<Register Address="0x19F90000">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
+										<Register Address="0x0EF8320C">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x0EF8320C">
+											<Selector SelectorName="TriggerSelector">3</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
 										<Register Address="0x1AF90000">
 											<RegisterValue>00-00-00-01</RegisterValue>
 										</Register>
 										<Register Address="0x1AF90000">
 											<Selector SelectorName="DeviceStreamChannelSelector">0</Selector>
 											<RegisterValue>00-00-00-01</RegisterValue>
+										</Register>
+										<Register Address="0x11F83200">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x05F93400">
+											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
 										<Register Address="0x1BF90000">
 											<RegisterValue>00-00-00-00</RegisterValue>
@@ -8446,6 +8503,21 @@ External Setpoint Generation:
 											<Selector SelectorName="GevStreamChannelSelector">0</Selector>
 											<RegisterValue>00-00-03-24</RegisterValue>
 										</Register>
+										<Register Address="0x0DF92600">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x0EF92600">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001100">
+											<RegisterValue>00-00-00-03</RegisterValue>
+										</Register>
+										<Register Address="0x01F95200">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x01F94500">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
 										<Register Address="0x17F84E08">
 											<RegisterValue>00-00-1F-44</RegisterValue>
 										</Register>
@@ -8475,14 +8547,17 @@ External Setpoint Generation:
 											<RegisterValue>A9-FE-DD-76</RegisterValue>
 										</Register>
 										<Register Address="0x00000D00">
-											<RegisterValue>00-00-CC-49</RegisterValue>
+											<RegisterValue>00-00-C7-54</RegisterValue>
 										</Register>
 										<Register Address="0x00000D00">
 											<Selector SelectorName="DeviceStreamChannelSelector">0</Selector>
-											<RegisterValue>00-00-CC-49</RegisterValue>
+											<RegisterValue>00-00-C7-54</RegisterValue>
 										</Register>
 										<Register Address="0x20F90000">
 											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x01F93900">
+											<RegisterValue>00-00-00-01</RegisterValue>
 										</Register>
 										<Register Address="0x21F90000">
 											<RegisterValue>00-00-00-01</RegisterValue>
@@ -8499,11 +8574,8 @@ External Setpoint Generation:
 										<Register Address="0x01FA0000">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
-										<Register Address="0x01F94500">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
 										<Register Address="0x02FA0000">
-											<RegisterValue>00-00-A5-94</RegisterValue>
+											<RegisterValue>00-00-9D-FB</RegisterValue>
 										</Register>
 										<Register Address="0x10F80000">
 											<RegisterValue>00-00-00-00</RegisterValue>
@@ -8515,17 +8587,11 @@ External Setpoint Generation:
 											<Selector SelectorName="DeviceClockSelector">0</Selector>
 											<RegisterValue>04-6C-F7-0F</RegisterValue>
 										</Register>
-										<Register Address="0x12F80000">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x01F93900">
-											<RegisterValue>00-00-00-01</RegisterValue>
-										</Register>
 										<Register Address="0x23F90000">
-											<RegisterValue>00-00-02-D9</RegisterValue>
+											<RegisterValue>00-00-00-14</RegisterValue>
 										</Register>
 										<Register Address="0x23F90004">
-											<RegisterValue>04-D3-91-88</RegisterValue>
+											<RegisterValue>6F-DB-68-60</RegisterValue>
 										</Register>
 										<Register Address="0x0000093C">
 											<RegisterValue>00-00-00-00</RegisterValue>
@@ -8534,10 +8600,10 @@ External Setpoint Generation:
 											<RegisterValue>3B-9A-CA-00</RegisterValue>
 										</Register>
 										<Register Address="0x26F90000">
-											<RegisterValue>00-00-00-00</RegisterValue>
+											<RegisterValue>00-00-00-04</RegisterValue>
 										</Register>
 										<Register Address="0x26F90004">
-											<RegisterValue>00-00-00-00</RegisterValue>
+											<RegisterValue>6F-77-F2-68</RegisterValue>
 										</Register>
 										<Register Address="0x13F80000">
 											<RegisterValue>00-00-00-02</RegisterValue>
@@ -8628,25 +8694,6 @@ External Setpoint Generation:
 										</Register>
 										<Register Address="0x09F92600">
 											<RegisterValue>00-00-00-01</RegisterValue>
-										</Register>
-										<Register Address="0x04F81400">
-											<RegisterValue>00-00-00-01</RegisterValue>
-										</Register>
-										<Register Address="0x06F81400">
-											<RegisterValue>00-00-00-01</RegisterValue>
-										</Register>
-										<Register Address="0x0AF81400">
-											<RegisterValue>00-00-00-01</RegisterValue>
-										</Register>
-										<Register Address="0x0DF81400">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x0EF81400">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x0EF81400">
-											<Selector SelectorName="RegionSelector">0</Selector>
-											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
 										<Register Address="0x0FF81400">
 											<RegisterValue>00-00-07-90</RegisterValue>
@@ -8782,12 +8829,6 @@ External Setpoint Generation:
 											<RegisterValue>00-00-00-02</RegisterValue>
 										</Register>
 										<Register Address="0x01F81400">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x0DF92600">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x0EF92600">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
 										<Register Address="0x02F81400">
@@ -8937,9 +8978,6 @@ External Setpoint Generation:
 											<Selector SelectorName="TestPatternGeneratorSelector">0</Selector>
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
-										<Register Address="0x0FFA0208">
-											<RegisterValue>00-00-02-FF</RegisterValue>
-										</Register>
 										<Register Address="0x05FA0200">
 											<RegisterValue>00-00-0F-FF</RegisterValue>
 										</Register>
@@ -9003,26 +9041,11 @@ External Setpoint Generation:
 											<Selector SelectorName="TestPatternGeneratorSelector">0</Selector>
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
-										<Register Address="0x01F83200">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x01F93400">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x06F83200">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x02F93400">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x07F83200">
-											<RegisterValue>00-00-BA-23</RegisterValue>
+										<Register Address="0x08F83200">
+											<RegisterValue>00-00-BB-ED</RegisterValue>
 										</Register>
 										<Register Address="0x09F83200">
 											<RegisterValue>00-00-00-0A</RegisterValue>
-										</Register>
-										<Register Address="0x08F83200">
-											<RegisterValue>00-00-BA-23</RegisterValue>
 										</Register>
 										<Register Address="0x03F93400">
 											<RegisterValue>00-00-00-01</RegisterValue>
@@ -9044,8 +9067,8 @@ External Setpoint Generation:
 										<Register Address="0x0AF83200">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
-										<Register Address="0x0BF83200">
-											<RegisterValue>00-00-00-03</RegisterValue>
+										<Register Address="0x06F83200">
+											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
 										<Register Address="0x0CF83200">
 											<RegisterValue>00-00-00-00</RegisterValue>
@@ -9054,28 +9077,15 @@ External Setpoint Generation:
 											<Selector SelectorName="TriggerSelector">0</Selector>
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
-										<Register Address="0x0CF8320C">
-											<RegisterValue>00-00-00-01</RegisterValue>
+										<Register Address="0x10F8320C">
+											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
-										<Register Address="0x0CF8320C">
+										<Register Address="0x10F8320C">
 											<Selector SelectorName="TriggerSelector">3</Selector>
-											<RegisterValue>00-00-00-01</RegisterValue>
-										</Register>
-										<Register Address="0x05F93400">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x0EF8320C">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x0EF8320C">
-											<Selector SelectorName="TriggerSelector">3</Selector>
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x11F83200">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
 										<Register Address="0x12F83200">
-											<RegisterValue>00-00-03-E8</RegisterValue>
+											<RegisterValue>00-00-03-20</RegisterValue>
 										</Register>
 										<Register Address="0x14F83200">
 											<RegisterValue>00-00-00-0F</RegisterValue>
@@ -9083,11 +9093,8 @@ External Setpoint Generation:
 										<Register Address="0x13F83200">
 											<RegisterValue>00-40-00-00</RegisterValue>
 										</Register>
-										<Register Address="0x01F95200">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
 										<Register Address="0x01F84600">
-											<RegisterValue>00-00-00-00</RegisterValue>
+											<RegisterValue>00-00-00-01</RegisterValue>
 										</Register>
 										<Register Address="0x02F84600">
 											<RegisterValue>00-00-00-0B</RegisterValue>
@@ -9127,7 +9134,7 @@ External Setpoint Generation:
 											<RegisterValue>00-00-00-01</RegisterValue>
 										</Register>
 										<Register Address="0x37000000">
-											<RegisterValue>00-00-00-00</RegisterValue>
+											<RegisterValue>00-00-00-04</RegisterValue>
 										</Register>
 										<Register Address="0x37000100">
 											<RegisterValue>00-00-00-00</RegisterValue>
@@ -9197,9 +9204,6 @@ External Setpoint Generation:
 										</Register>
 										<Register Address="0x37000310">
 											<Selector SelectorName="CounterSelector">4</Selector>
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x30001100">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
 										<Register Address="0x30001120">
@@ -9486,9 +9490,13 @@ External Setpoint Generation:
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
 										<Register Address="0x30001504">
-											<RegisterValue>00-00-00-00</RegisterValue>
+											<RegisterValue>00-00-00-0E</RegisterValue>
 										</Register>
 										<Register Address="0x30001510">
+											<RegisterValue>00-00-7F-FF</RegisterValue>
+										</Register>
+										<Register Address="0x30001510">
+											<Selector SelectorName="UserSetFeatureSelector">14</Selector>
 											<RegisterValue>00-00-7F-FF</RegisterValue>
 										</Register>
 										<Register Address="0x30001510">
@@ -9547,10 +9555,6 @@ External Setpoint Generation:
 											<Selector SelectorName="UserSetFeatureSelector">13</Selector>
 											<RegisterValue>00-00-7F-FF</RegisterValue>
 										</Register>
-										<Register Address="0x30001510">
-											<Selector SelectorName="UserSetFeatureSelector">14</Selector>
-											<RegisterValue>00-00-7F-FF</RegisterValue>
-										</Register>
 										<Register Address="0x30001514">
 											<RegisterValue>00-00-00-0F</RegisterValue>
 										</Register>
@@ -9564,7 +9568,7 @@ External Setpoint Generation:
 											<RegisterValue>01-2D-E8-38</RegisterValue>
 										</Register>
 										<Register Address="0x02F93900">
-											<RegisterValue>00-00-00-02</RegisterValue>
+											<RegisterValue>00-00-00-08</RegisterValue>
 										</Register>
 										<Register Address="0x01F93D00">
 											<RegisterValue>00-00-00-00</RegisterValue>
@@ -9693,10 +9697,10 @@ External Setpoint Generation:
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
 										<Register Address="0x00000948">
-											<RegisterValue>00-00-02-D8</RegisterValue>
+											<RegisterValue>00-00-00-04</RegisterValue>
 										</Register>
 										<Register Address="0x0000094C">
-											<RegisterValue>97-45-F5-C0</RegisterValue>
+											<RegisterValue>6F-77-F2-68</RegisterValue>
 										</Register>
 										<Register Address="0x00000950">
 											<RegisterValue>00-00-00-00</RegisterValue>
@@ -9753,21 +9757,8 @@ External Setpoint Generation:
 											<Selector SelectorName="GevStreamChannelSelector">0</Selector>
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
-										<Register Address="0x10F8320C">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x10F8320C">
-											<Selector SelectorName="TriggerSelector">3</Selector>
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x30010040">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x06F84600">
-											<RegisterValue>00-00-00-01</RegisterValue>
-										</Register>
-										<Register Address="0x01F86C00">
-											<RegisterValue>00-00-00-00</RegisterValue>
+										<Register Address="0x07F83200">
+											<RegisterValue>00-00-BB-ED</RegisterValue>
 										</Register>
 										<Register Address="0x000000A8">
 											<RegisterValue>42-65-63-6B</RegisterValue>
@@ -9817,6 +9808,15 @@ External Setpoint Generation:
 										<Register Address="0x0000092C">
 											<RegisterValue>F0-00-00-00</RegisterValue>
 										</Register>
+										<Register Address="0x30010040">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x06F84600">
+											<RegisterValue>00-00-00-01</RegisterValue>
+										</Register>
+										<Register Address="0x01F86C00">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
 									</RegisterValues>
 									<MetaData>
 										<DeviceManifestEntrySelector>
@@ -9839,7 +9839,15 @@ External Setpoint Generation:
 										<Register Address="0x05F80000">
 											<RegisterValue>00-00-00-01</RegisterValue>
 										</Register>
+										<Register Address="0x05F80000">
+											<Selector SelectorName="DeviceLinkSelector">0</Selector>
+											<RegisterValue>00-00-00-01</RegisterValue>
+										</Register>
 										<Register Address="0x06F80000">
+											<RegisterValue>00-00-03-E8</RegisterValue>
+										</Register>
+										<Register Address="0x06F80000">
+											<Selector SelectorName="DeviceLinkSelector">0</Selector>
 											<RegisterValue>00-00-03-E8</RegisterValue>
 										</Register>
 										<Register Address="0x12F90000">
@@ -9848,20 +9856,8 @@ External Setpoint Generation:
 										<Register Address="0x15F90000">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
-										<Register Address="0x08F80000">
-											<RegisterValue>00-00-00-01</RegisterValue>
-										</Register>
-										<Register Address="0x09F80000">
-											<RegisterValue>00-00-0B-B8</RegisterValue>
-										</Register>
 										<Register Address="0x19F90000">
 											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x1EF90000">
-											<RegisterValue>40-00-05-DC</RegisterValue>
-										</Register>
-										<Register Address="0x00000D18">
-											<RegisterValue>A9-FE-DD-76</RegisterValue>
 										</Register>
 										<Register Address="0x0DF80000">
 											<RegisterValue>00-00-00-01</RegisterValue>
@@ -9878,22 +9874,39 @@ External Setpoint Generation:
 										<Register Address="0x14F80000">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
-										<Register Address="0x0DF81400">
+										<Register Address="0x0EF81400">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
 										<Register Address="0x0EF81400">
+											<Selector SelectorName="RegionSelector">0</Selector>
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
 										<Register Address="0x0FF81400">
 											<RegisterValue>00-00-07-90</RegisterValue>
 										</Register>
+										<Register Address="0x0FF81400">
+											<Selector SelectorName="RegionSelector">0</Selector>
+											<RegisterValue>00-00-07-90</RegisterValue>
+										</Register>
 										<Register Address="0x13F81400">
+											<RegisterValue>00-00-04-C0</RegisterValue>
+										</Register>
+										<Register Address="0x13F81400">
+											<Selector SelectorName="RegionSelector">0</Selector>
 											<RegisterValue>00-00-04-C0</RegisterValue>
 										</Register>
 										<Register Address="0x17F81400">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
+										<Register Address="0x17F81400">
+											<Selector SelectorName="RegionSelector">0</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
 										<Register Address="0x1BF81400">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x1BF81400">
+											<Selector SelectorName="RegionSelector">0</Selector>
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
 										<Register Address="0x05F81400">
@@ -9917,43 +9930,7 @@ External Setpoint Generation:
 										<Register Address="0x03F81400">
 											<RegisterValue>01-08-00-01</RegisterValue>
 										</Register>
-										<Register Address="0x03FA0200">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x04FA0200">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x05FA0200">
-											<RegisterValue>00-00-0F-FF</RegisterValue>
-										</Register>
-										<Register Address="0x06FA0200">
-											<RegisterValue>00-00-0F-FF</RegisterValue>
-										</Register>
-										<Register Address="0x07FA0200">
-											<RegisterValue>00-00-02-C8</RegisterValue>
-										</Register>
-										<Register Address="0x08FA0200">
-											<RegisterValue>00-00-01-60</RegisterValue>
-										</Register>
-										<Register Address="0x09FA0200">
-											<RegisterValue>00-00-00-02</RegisterValue>
-										</Register>
-										<Register Address="0x0AFA0200">
-											<RegisterValue>00-00-00-02</RegisterValue>
-										</Register>
-										<Register Address="0x0BFA0200">
-											<RegisterValue>00-00-00-FF</RegisterValue>
-										</Register>
-										<Register Address="0x0CFA0200">
-											<RegisterValue>00-00-00-FF</RegisterValue>
-										</Register>
-										<Register Address="0x0EFA0200">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
 										<Register Address="0x01F83200">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x06F83200">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
 										<Register Address="0x03F93400">
@@ -9962,8 +9939,12 @@ External Setpoint Generation:
 										<Register Address="0x0AF83200">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
-										<Register Address="0x0BF83200">
-											<RegisterValue>00-00-00-03</RegisterValue>
+										<Register Address="0x0CF83200">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x0CF83200">
+											<Selector SelectorName="TriggerSelector">0</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
 										<Register Address="0x0CF8320C">
 											<RegisterValue>00-00-00-01</RegisterValue>
@@ -9972,11 +9953,22 @@ External Setpoint Generation:
 											<Selector SelectorName="TriggerSelector">3</Selector>
 											<RegisterValue>00-00-00-01</RegisterValue>
 										</Register>
-										<Register Address="0x12F83200">
-											<RegisterValue>00-00-03-E8</RegisterValue>
-										</Register>
-										<Register Address="0x01F84600">
+										<Register Address="0x0EF8320C">
 											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x0EF8320C">
+											<Selector SelectorName="TriggerSelector">3</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x10F8320C">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x10F8320C">
+											<Selector SelectorName="TriggerSelector">3</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x12F83200">
+											<RegisterValue>00-00-03-20</RegisterValue>
 										</Register>
 										<Register Address="0x02F84600">
 											<RegisterValue>00-00-00-0B</RegisterValue>
@@ -9985,37 +9977,388 @@ External Setpoint Generation:
 											<Selector SelectorName="GainSelector">0</Selector>
 											<RegisterValue>00-00-00-0B</RegisterValue>
 										</Register>
-										<Register Address="0x03F84600">
+										<Register Address="0x02F84604">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x02F84604">
+											<Selector SelectorName="GainSelector">1</Selector>
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
 										<Register Address="0x04F84600">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
+										<Register Address="0x04F84600">
+											<Selector SelectorName="BlackLevelSelector">0</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
 										<Register Address="0x05F84600">
+											<RegisterValue>00-00-00-02</RegisterValue>
+										</Register>
+										<Register Address="0x05F84600">
+											<Selector SelectorName="BlackLevelSelector">0</Selector>
 											<RegisterValue>00-00-00-02</RegisterValue>
 										</Register>
 										<Register Address="0x08F84600">
 											<RegisterValue>00-00-05-2F</RegisterValue>
 										</Register>
-										<Register Address="0x37000000">
+										<Register Address="0x37000100">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
 										<Register Address="0x37000100">
+											<Selector SelectorName="CounterSelector">0</Selector>
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
 										<Register Address="0x37000300">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
-										<Register Address="0x30001100">
+										<Register Address="0x37000300">
+											<Selector SelectorName="CounterSelector">0</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x37000104">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x37000104">
+											<Selector SelectorName="CounterSelector">1</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x37000304">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x37000304">
+											<Selector SelectorName="CounterSelector">1</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x37000108">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x37000108">
+											<Selector SelectorName="CounterSelector">2</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x37000308">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x37000308">
+											<Selector SelectorName="CounterSelector">2</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x3700010C">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x3700010C">
+											<Selector SelectorName="CounterSelector">3</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x3700030C">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x3700030C">
+											<Selector SelectorName="CounterSelector">3</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x37000110">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x37000110">
+											<Selector SelectorName="CounterSelector">4</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x37000310">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x37000310">
+											<Selector SelectorName="CounterSelector">4</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001140">
+											<RegisterValue>55-73-65-72</RegisterValue>
+										</Register>
+										<Register Address="0x30001140">
+											<Selector SelectorName="UserSetSelector">1</Selector>
+											<RegisterValue>55-73-65-72</RegisterValue>
+										</Register>
+										<Register Address="0x30001144">
+											<RegisterValue>53-65-74-31</RegisterValue>
+										</Register>
+										<Register Address="0x30001144">
+											<Selector SelectorName="UserSetSelector">1</Selector>
+											<RegisterValue>53-65-74-31</RegisterValue>
+										</Register>
+										<Register Address="0x30001148">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001148">
+											<Selector SelectorName="UserSetSelector">1</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x3000114C">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x3000114C">
+											<Selector SelectorName="UserSetSelector">1</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001150">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001150">
+											<Selector SelectorName="UserSetSelector">1</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001154">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001154">
+											<Selector SelectorName="UserSetSelector">1</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001158">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001158">
+											<Selector SelectorName="UserSetSelector">1</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x3000115C">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x3000115C">
+											<Selector SelectorName="UserSetSelector">1</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001160">
+											<RegisterValue>55-73-65-72</RegisterValue>
+										</Register>
+										<Register Address="0x30001160">
+											<Selector SelectorName="UserSetSelector">2</Selector>
+											<RegisterValue>55-73-65-72</RegisterValue>
+										</Register>
+										<Register Address="0x30001164">
+											<RegisterValue>53-65-74-32</RegisterValue>
+										</Register>
+										<Register Address="0x30001164">
+											<Selector SelectorName="UserSetSelector">2</Selector>
+											<RegisterValue>53-65-74-32</RegisterValue>
+										</Register>
+										<Register Address="0x30001168">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001168">
+											<Selector SelectorName="UserSetSelector">2</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x3000116C">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x3000116C">
+											<Selector SelectorName="UserSetSelector">2</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001170">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001170">
+											<Selector SelectorName="UserSetSelector">2</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001174">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001174">
+											<Selector SelectorName="UserSetSelector">2</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001178">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001178">
+											<Selector SelectorName="UserSetSelector">2</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x3000117C">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x3000117C">
+											<Selector SelectorName="UserSetSelector">2</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001180">
+											<RegisterValue>55-73-65-72</RegisterValue>
+										</Register>
+										<Register Address="0x30001180">
+											<Selector SelectorName="UserSetSelector">3</Selector>
+											<RegisterValue>55-73-65-72</RegisterValue>
+										</Register>
+										<Register Address="0x30001184">
+											<RegisterValue>53-65-74-33</RegisterValue>
+										</Register>
+										<Register Address="0x30001184">
+											<Selector SelectorName="UserSetSelector">3</Selector>
+											<RegisterValue>53-65-74-33</RegisterValue>
+										</Register>
+										<Register Address="0x30001188">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001188">
+											<Selector SelectorName="UserSetSelector">3</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x3000118C">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x3000118C">
+											<Selector SelectorName="UserSetSelector">3</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001190">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001190">
+											<Selector SelectorName="UserSetSelector">3</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001194">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001194">
+											<Selector SelectorName="UserSetSelector">3</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001198">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x30001198">
+											<Selector SelectorName="UserSetSelector">3</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x3000119C">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x3000119C">
+											<Selector SelectorName="UserSetSelector">3</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x300011A0">
+											<RegisterValue>55-73-65-72</RegisterValue>
+										</Register>
+										<Register Address="0x300011A0">
+											<Selector SelectorName="UserSetSelector">4</Selector>
+											<RegisterValue>55-73-65-72</RegisterValue>
+										</Register>
+										<Register Address="0x300011A4">
+											<RegisterValue>53-65-74-34</RegisterValue>
+										</Register>
+										<Register Address="0x300011A4">
+											<Selector SelectorName="UserSetSelector">4</Selector>
+											<RegisterValue>53-65-74-34</RegisterValue>
+										</Register>
+										<Register Address="0x300011A8">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x300011A8">
+											<Selector SelectorName="UserSetSelector">4</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x300011AC">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x300011AC">
+											<Selector SelectorName="UserSetSelector">4</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x300011B0">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x300011B0">
+											<Selector SelectorName="UserSetSelector">4</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x300011B4">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x300011B4">
+											<Selector SelectorName="UserSetSelector">4</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x300011B8">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x300011B8">
+											<Selector SelectorName="UserSetSelector">4</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x300011BC">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x300011BC">
+											<Selector SelectorName="UserSetSelector">4</Selector>
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
 										<Register Address="0x30001500">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
-										<Register Address="0x30001504">
-											<RegisterValue>00-00-00-00</RegisterValue>
+										<Register Address="0x30001510">
+											<RegisterValue>00-00-7F-FF</RegisterValue>
 										</Register>
 										<Register Address="0x30001510">
+											<Selector SelectorName="UserSetFeatureSelector">0</Selector>
+											<RegisterValue>00-00-7F-FF</RegisterValue>
+										</Register>
+										<Register Address="0x30001510">
+											<Selector SelectorName="UserSetFeatureSelector">1</Selector>
+											<RegisterValue>00-00-7F-FF</RegisterValue>
+										</Register>
+										<Register Address="0x30001510">
+											<Selector SelectorName="UserSetFeatureSelector">2</Selector>
+											<RegisterValue>00-00-7F-FF</RegisterValue>
+										</Register>
+										<Register Address="0x30001510">
+											<Selector SelectorName="UserSetFeatureSelector">3</Selector>
+											<RegisterValue>00-00-7F-FF</RegisterValue>
+										</Register>
+										<Register Address="0x30001510">
+											<Selector SelectorName="UserSetFeatureSelector">4</Selector>
+											<RegisterValue>00-00-7F-FF</RegisterValue>
+										</Register>
+										<Register Address="0x30001510">
+											<Selector SelectorName="UserSetFeatureSelector">5</Selector>
+											<RegisterValue>00-00-7F-FF</RegisterValue>
+										</Register>
+										<Register Address="0x30001510">
+											<Selector SelectorName="UserSetFeatureSelector">6</Selector>
+											<RegisterValue>00-00-7F-FF</RegisterValue>
+										</Register>
+										<Register Address="0x30001510">
+											<Selector SelectorName="UserSetFeatureSelector">7</Selector>
+											<RegisterValue>00-00-7F-FF</RegisterValue>
+										</Register>
+										<Register Address="0x30001510">
+											<Selector SelectorName="UserSetFeatureSelector">8</Selector>
+											<RegisterValue>00-00-7F-FF</RegisterValue>
+										</Register>
+										<Register Address="0x30001510">
+											<Selector SelectorName="UserSetFeatureSelector">9</Selector>
+											<RegisterValue>00-00-7F-FF</RegisterValue>
+										</Register>
+										<Register Address="0x30001510">
+											<Selector SelectorName="UserSetFeatureSelector">10</Selector>
+											<RegisterValue>00-00-7F-FF</RegisterValue>
+										</Register>
+										<Register Address="0x30001510">
+											<Selector SelectorName="UserSetFeatureSelector">11</Selector>
+											<RegisterValue>00-00-7F-FF</RegisterValue>
+										</Register>
+										<Register Address="0x30001510">
+											<Selector SelectorName="UserSetFeatureSelector">12</Selector>
+											<RegisterValue>00-00-7F-FF</RegisterValue>
+										</Register>
+										<Register Address="0x30001510">
+											<Selector SelectorName="UserSetFeatureSelector">13</Selector>
+											<RegisterValue>00-00-7F-FF</RegisterValue>
+										</Register>
+										<Register Address="0x30001510">
+											<Selector SelectorName="UserSetFeatureSelector">14</Selector>
 											<RegisterValue>00-00-7F-FF</RegisterValue>
 										</Register>
 										<Register Address="0x01F93B00">
@@ -10030,55 +10373,172 @@ External Setpoint Generation:
 										<Register Address="0x03F84E00">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
-										<Register Address="0x00000014">
-											<RegisterValue>00-00-00-06</RegisterValue>
-										</Register>
-										<Register Address="0x00000014">
-											<Selector SelectorName="GevInterfaceSelector">0</Selector>
-											<RegisterValue>00-00-00-06</RegisterValue>
-										</Register>
-										<Register Address="0x0000064C">
-											<RegisterValue>A9-FE-9A-A2</RegisterValue>
-										</Register>
-										<Register Address="0x0000064C">
-											<Selector SelectorName="GevInterfaceSelector">0</Selector>
-											<RegisterValue>A9-FE-9A-A2</RegisterValue>
-										</Register>
-										<Register Address="0x0000065C">
-											<RegisterValue>FF-FF-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x0000065C">
-											<Selector SelectorName="GevInterfaceSelector">0</Selector>
-											<RegisterValue>FF-FF-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x0000066C">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x0000066C">
-											<Selector SelectorName="GevInterfaceSelector">0</Selector>
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
 										<Register Address="0x00000950">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
 										<Register Address="0x00000960">
 											<RegisterValue>00-00-00-00</RegisterValue>
 										</Register>
+										<Register Address="0x08F80000">
+											<RegisterValue>00-00-00-01</RegisterValue>
+										</Register>
+										<Register Address="0x08F80000">
+											<Selector SelectorName="DeviceLinkSelector">0</Selector>
+											<RegisterValue>00-00-00-01</RegisterValue>
+										</Register>
+										<Register Address="0x09F80000">
+											<RegisterValue>00-00-0B-B8</RegisterValue>
+										</Register>
+										<Register Address="0x09F80000">
+											<Selector SelectorName="DeviceLinkSelector">0</Selector>
+											<RegisterValue>00-00-0B-B8</RegisterValue>
+										</Register>
+										<Register Address="0x1EF90000">
+											<RegisterValue>40-00-05-DC</RegisterValue>
+										</Register>
+										<Register Address="0x1EF90000">
+											<Selector SelectorName="DeviceStreamChannelSelector">0</Selector>
+											<RegisterValue>40-00-05-DC</RegisterValue>
+										</Register>
+										<Register Address="0x00000D18">
+											<RegisterValue>A9-FE-DD-76</RegisterValue>
+										</Register>
+										<Register Address="0x00000D18">
+											<Selector SelectorName="DeviceStreamChannelSelector">0</Selector>
+											<RegisterValue>A9-FE-DD-76</RegisterValue>
+										</Register>
+										<Register Address="0x0DF81400">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x03FA0200">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x03FA0200">
+											<Selector SelectorName="TestPatternGeneratorSelector">0</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x04FA0200">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x04FA0200">
+											<Selector SelectorName="TestPatternGeneratorSelector">0</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x05FA0200">
+											<RegisterValue>00-00-0F-FF</RegisterValue>
+										</Register>
+										<Register Address="0x05FA0200">
+											<Selector SelectorName="TestPatternGeneratorSelector">0</Selector>
+											<RegisterValue>00-00-0F-FF</RegisterValue>
+										</Register>
+										<Register Address="0x06FA0200">
+											<RegisterValue>00-00-0F-FF</RegisterValue>
+										</Register>
+										<Register Address="0x06FA0200">
+											<Selector SelectorName="TestPatternGeneratorSelector">0</Selector>
+											<RegisterValue>00-00-0F-FF</RegisterValue>
+										</Register>
+										<Register Address="0x07FA0200">
+											<RegisterValue>00-00-02-C8</RegisterValue>
+										</Register>
+										<Register Address="0x07FA0200">
+											<Selector SelectorName="TestPatternGeneratorSelector">0</Selector>
+											<RegisterValue>00-00-02-C8</RegisterValue>
+										</Register>
+										<Register Address="0x08FA0200">
+											<RegisterValue>00-00-01-60</RegisterValue>
+										</Register>
+										<Register Address="0x08FA0200">
+											<Selector SelectorName="TestPatternGeneratorSelector">0</Selector>
+											<RegisterValue>00-00-01-60</RegisterValue>
+										</Register>
+										<Register Address="0x09FA0200">
+											<RegisterValue>00-00-00-02</RegisterValue>
+										</Register>
+										<Register Address="0x09FA0200">
+											<Selector SelectorName="TestPatternGeneratorSelector">0</Selector>
+											<RegisterValue>00-00-00-02</RegisterValue>
+										</Register>
+										<Register Address="0x0AFA0200">
+											<RegisterValue>00-00-00-02</RegisterValue>
+										</Register>
+										<Register Address="0x0AFA0200">
+											<Selector SelectorName="TestPatternGeneratorSelector">0</Selector>
+											<RegisterValue>00-00-00-02</RegisterValue>
+										</Register>
+										<Register Address="0x0BFA0200">
+											<RegisterValue>00-00-00-FF</RegisterValue>
+										</Register>
+										<Register Address="0x0BFA0200">
+											<Selector SelectorName="TestPatternGeneratorSelector">0</Selector>
+											<RegisterValue>00-00-00-FF</RegisterValue>
+										</Register>
+										<Register Address="0x0CFA0200">
+											<RegisterValue>00-00-00-FF</RegisterValue>
+										</Register>
+										<Register Address="0x0CFA0200">
+											<Selector SelectorName="TestPatternGeneratorSelector">0</Selector>
+											<RegisterValue>00-00-00-FF</RegisterValue>
+										</Register>
+										<Register Address="0x0EFA0200">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x0EFA0200">
+											<Selector SelectorName="TestPatternGeneratorSelector">0</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x0BF83200">
+											<RegisterValue>00-00-00-03</RegisterValue>
+										</Register>
+										<Register Address="0x01F84600">
+											<RegisterValue>00-00-00-01</RegisterValue>
+										</Register>
+										<Register Address="0x03F84600">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x37000000">
+											<RegisterValue>00-00-00-04</RegisterValue>
+										</Register>
+										<Register Address="0x30001100">
+											<RegisterValue>00-00-00-03</RegisterValue>
+										</Register>
+										<Register Address="0x30001504">
+											<RegisterValue>00-00-00-0E</RegisterValue>
+										</Register>
+										<Register Address="0x00000014">
+											<RegisterValue>00-00-00-06</RegisterValue>
+										</Register>
+										<Register Address="0x00000014">
+											<Selector SelectorName="GevInterfaceSelector">0</Selector>
+											<RegisterValue>00-00-00-06</RegisterValue>
+										</Register>
+										<Register Address="0x0000064C">
+											<RegisterValue>A9-FE-9A-A2</RegisterValue>
+										</Register>
+										<Register Address="0x0000064C">
+											<Selector SelectorName="GevInterfaceSelector">0</Selector>
+											<RegisterValue>A9-FE-9A-A2</RegisterValue>
+										</Register>
+										<Register Address="0x0000065C">
+											<RegisterValue>FF-FF-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x0000065C">
+											<Selector SelectorName="GevInterfaceSelector">0</Selector>
+											<RegisterValue>FF-FF-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x0000066C">
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
+										<Register Address="0x0000066C">
+											<Selector SelectorName="GevInterfaceSelector">0</Selector>
+											<RegisterValue>00-00-00-00</RegisterValue>
+										</Register>
 										<Register Address="0x17F84E00">
 											<RegisterValue>00-00-05-DC</RegisterValue>
 										</Register>
-										<Register Address="0x00000938">
-											<RegisterValue>00-00-0B-B8</RegisterValue>
-										</Register>
-										<Register Address="0x0EF8320C">
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x0EF8320C">
-											<Selector SelectorName="TriggerSelector">3</Selector>
-											<RegisterValue>00-00-00-00</RegisterValue>
-										</Register>
-										<Register Address="0x10F8320C">
-											<RegisterValue>00-00-00-00</RegisterValue>
+										<Register Address="0x17F84E00">
+											<Selector SelectorName="GevStreamChannelSelector">0</Selector>
+											<RegisterValue>00-00-05-DC</RegisterValue>
 										</Register>
 									</DesiredValues>
 								</TreeValueCache>
@@ -19478,16 +19938,16 @@ External Setpoint Generation:
 										<CameraRegisterChild Index="22" Name="Pixel Format" Address="0x03F81400" Data="01-08-00-01" Value="17301505" Key="60" InternalKey="60" SelectedIndex="0" SelectedValue="0" Flags="01-00-00-00"/>
 										<CameraRegisterChild Index="23" Name="Acquisition Mode" Address="0x01F83200" Data="00-00-00-00" Value="0" Key="61" InternalKey="61" SelectedIndex="0" SelectedValue="0" Flags="01-00-00-00"/>
 										<CameraRegisterChild Index="24" Name="Acquisition Frame Count" Address="0xFFFFFFFF" Key="62" InternalKey="62" SelectedIndex="0" SelectedValue="0" Flags="01-00-00-00"/>
-										<CameraRegisterChild Index="25" Name="Acquisition Frame Rate Enable" Address="0xFFFFFFFF" Key="63" InternalKey="63" SelectedIndex="0" SelectedValue="0" Flags="01-00-00-00"/>
+										<CameraRegisterChild Index="25" Name="Acquisition Frame Rate Enable" Address="0xFFFFFFFF" Key="63" InternalKey="63" SelectedIndex="0" SelectedValue="0" Flags="00-00-00-00"/>
 										<CameraRegisterChild Index="26" Name="Acquisition Frame Rate" Address="0xFFFFFFFF" Key="64" InternalKey="64" SelectedIndex="0" SelectedValue="0" Flags="01-00-00-00"/>
 										<CameraRegisterChild Index="27" Name="Trigger Selector" Address="0x0BF83200" Key="71" InternalKey="71" SelectedIndex="0" SelectedValue="0" Flags="01-00-00-00">
 											<CameraRegisterChild Index="0" Name="Trigger Activation" Address="0xFFFFFFFF" Key="74" InternalKey="74" SelectedIndex="0" SelectedValue="0" Flags="01-00-00-00"/>
 											<CameraRegisterChild Index="1" Name="Trigger Delay" Address="0x10F8320C" Data="00-00-00-00" Value="0" Key="75" InternalKey="75" SelectedIndex="0" SelectedValue="0" Flags="01-00-00-00"/>
-											<CameraRegisterChild Index="2" Name="Trigger Mode" Address="0x0CF8320C" Data="00-00-00-01" Value="1" Key="72" InternalKey="72" SelectedIndex="0" SelectedValue="0" Flags="01-00-00-00"/>
+											<CameraRegisterChild Index="2" Name="Trigger Mode" Address="0x0CF8320C" Data="00-00-00-01" Value="1" Key="72" InternalKey="72" SelectedIndex="1" SelectedValue="0" Flags="01-00-00-00"/>
 											<CameraRegisterChild Index="3" Name="Trigger Source" Address="0x0EF8320C" Data="00-00-00-00" Value="0" Key="73" InternalKey="73" SelectedIndex="0" SelectedValue="0" Flags="01-00-00-00"/>
 										</CameraRegisterChild>
 										<CameraRegisterChild Index="28" Name="Exposure Mode" Address="0xFFFFFFFF" Key="76" InternalKey="76" SelectedIndex="0" SelectedValue="0" Flags="01-00-00-00"/>
-										<CameraRegisterChild Index="29" Name="Exposure Time" Address="0x12F83200" Data="00-00-03-E8" Value="1000" Key="77" InternalKey="77" SelectedIndex="0" SelectedValue="0" Flags="01-00-00-00"/>
+										<CameraRegisterChild Index="29" Name="Exposure Time" Address="0x12F83200" Data="00-00-03-20" Value="800" Key="77" InternalKey="77" SelectedIndex="0" SelectedValue="0" Flags="01-00-00-00"/>
 										<CameraRegisterChild Index="30" Name="Gain Selector" Address="0x01F84600" Key="78" InternalKey="78" SelectedIndex="0" SelectedValue="0" Flags="01-00-00-00">
 											<CameraRegisterChild Index="0" Name="Gain" Address="0x02F84600" Data="00-00-00-0B" Value="1.1" Key="79" InternalKey="79" SelectedIndex="0" SelectedValue="0" Flags="01-00-00-00"/>
 										</CameraRegisterChild>
@@ -19714,11 +20174,11 @@ External Setpoint Generation:
 								<Parameter HideParameter="true">
 									<Name HideSubItems="true">InitCameraCommands</Name>
 									<Comment><![CDATA[Array holding the commands used for initializing the camera]]></Comment>
-									<BitSize>1112</BitSize>
+									<BitSize>14776</BitSize>
 									<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
 									<ArrayInfo>
 										<LBound>0</LBound>
-										<Elements Min="0" MaxUnbounded="true">139</Elements>
+										<Elements Min="0" MaxUnbounded="true">1847</Elements>
 									</ArrayInfo>
 									<PTCID>#x00000005</PTCID>
 									<ContextId>1</ContextId>
@@ -19832,7 +20292,7 @@ External Setpoint Generation:
 								</Value>
 								<Value>
 									<Name>InitCameraCommands</Name>
-									<Data>8b00000000000000770000000000000042cbdb1399998d428f386733fbaf00b13800000001000000010000001f0020000000000000000000496e697469616c697a6174696f6e20436f6d6d616e64732048656164657200496e697469616c697a6174696f6e20436f6d6d616e647320436f6d6d656e74000000040000020058000500008c00000000f03400</Data>
+									<Data>3707000000000000770000000000000042cbdb1399998d428f386733fbaf00b13800000001000000010000001f0020000000000000000000496e697469616c697a6174696f6e20436f6d6d616e64732048656164657200496e697469616c697a6174696f6e20436f6d6d616e647320436f6d6d656e740059000400020000001c00e800000010000000000000000000000000000000000001002d0010000000f80504000000000101002c0010000000f8060400000003e801002b0010000000f80d04000000000101002a0010000000f8120400000000000100290010000000f8140400000000000100280010000014f80d0400000000000100270010000014f8170400000000000100260010000014f81b0400000000000100250010000014f80e0400000000000100240010000014f80f0400000007900100230010000014f8130400000004c00100220010000014f8050400000000010100210010000014f8060400000000010100200010000014f80904000000000101001f0010000014f80a04000000000101001e0010000014f80104000000000001001d0010000014f80204000000000001001c0010000032f80a04000000000001001b0010000032f80b04000000000001001a0010000032f80c0400000000000100190010000014f8030400010800010100180010000032f8010400000000000100170010000032f80b0400000000030100160010000c32f8100400000000000100150010000c32f80c0400000000010100140010000c32f80e0400000000000100130010000032f8120400000003200100120010000046f8010400000000000100110010000046f80204000000000b0100100010000046f80104000000000101000f0010000446f80204000000000001000e0010000000003504000000000101000d0010000000003704000000000001000c0010000001003704000000000001000b0010000003003704000000000001000a001000000000370400000000010100090010000401003704000000000001000800100004030037040000000000010007001000000000370400000000020100060010000801003704000000000001000500100008030037040000000000010004001000000000370400000000030100030010000c0100370400000000000100020010000c0300370400000000000100010010000046f80804000000052f01000000100000110030040000000001020000002c00401100302000557365725365743100000000000000000000000000000000000000000000000001000000100000110030040000000002020000002c00601100302000557365725365743200000000000000000000000000000000000000000000000001000300100000000037040000000004010002001000100100370400000000000100010010001003003704000000000001000000100000110030040000000004020000002c00a01100302000557365725365743400000000000000000000000000000000000000000000000001001b0010000015003004000000000001001a0010000415003004000000000001001900100010150030040000007fff0100180010000415003004000000000101001700100010150030040000007fff0100160010000415003004000000000201001500100010150030040000007fff0100140010000415003004000000000301001300100010150030040000007fff0100120010000415003004000000000401001100100010150030040000007fff0100100010000415003004000000000501000f00100010150030040000007fff01000e0010000415003004000000000601000d00100010150030040000007fff01000c0010000415003004000000000701000b00100010150030040000007fff01000a0010000415003004000000000801000900100010150030040000007fff0100080010000415003004000000000901000700100010150030040000007fff0100060010000415003004000000000a01000500100010150030040000007fff0100040010000415003004000000000b01000300100010150030040000007fff0100020010000415003004000000000c01000100100010150030040000007fff01000000100000110030040000000003020000002c0080110030200055736572536574330000000000000000000000000000000000000000000000000100030010000415003004000000000d01000200100010150030040000007fff0100010010000415003004000000000e01000000100010150030040000007fff04000000c0000a00ba000a005800020000000100020003000400050006000a000b0007000800090036003700380039003a003b004100420043003c003d0047004b00480049004d004e004f00500051006200630064006600670068006a006b006c006e006f0070007200610079007a007b007c007300740076007f0080008100820083008400850086008700880089008a008b008c008d008e008f0090009100920093009400950096009700980099009a009b007d007e009c009d009e009f00</Data>
 								</Value>
 								<Value>
 									<Name>InitializationTimeout</Name>
