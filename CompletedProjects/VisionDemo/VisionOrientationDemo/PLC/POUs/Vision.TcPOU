@@ -3,11 +3,20 @@
   <POU Name="Vision" Id="{252271fb-6a71-407e-8f09-23cd75440a88}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM Vision
 VAR
-	VisionBase	: FB_VisionCameraBase;
+	VisionBase	: FB_VisionController;
+	_ImageCount	: ULINT;
+	ipImageResDisp	: ITcVnDisplayableImage;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[VisionBase.]]></ST>
+      <ST><![CDATA[VisionBase.CyclicLogic();
+
+IF VisionBase.imageCount > _Imagecount THEN
+	F_VN_CopyIntoDisplayableImage(VisionBase.ipImageIn, ipImageResDisp, VisionBase.hr);
+END_IF
+
+_ImageCount	:= VisionBase.imagecount;
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

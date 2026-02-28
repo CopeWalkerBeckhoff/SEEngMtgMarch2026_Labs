@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_VisionOrientation" Id="{448371c6-13eb-43c4-a0ce-ebb192d17413}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_VisionOrientation EXTENDS FB_PackML_BaseModule
+VAR
+	SpinAxis			: FB_Component_BasicAxis;
+	Camera				: FB_PlcCameraBase;
+	TON_Delay			: TON;
+	_SpinAxisPositionModulo	: LREAL;
+	ImageCaptureAngle	: LREAL := 130;
+	SpinVelocity		: LREAL := 500;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Acting States" Id="{e14cf1b1-45ff-4fb4-81b9-1f52a5d32669}" />
+    <Folder Name="Waiting States" Id="{ab86d3ba-50da-471d-864b-21041ca20d53}" />
+    <Method Name="Aborting" Id="{08b82fb7-4aad-43b5-9009-69587d93ae28}" FolderPath="Acting States\">
+      <Declaration><![CDATA[//! @summary This method contains code which will execute when this PackML module is in the <b>Aborting</b> state
+METHOD PROTECTED Aborting
+VAR
+	i				: UDINT;
+	SubModulesReady : BOOL := TRUE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE DescendantSequenceState OF
+	0:
+		NoStateTasksToComplete := FALSE;
+		DescendantSequenceState := DescendantSequenceState + 10;
+
+	10:
+		IF SpinAxis.Disable() THEN
+			StateTasksComplete 		:= TRUE;
+			DescendantSequenceState := DescendantSequenceState + 10;
+		END_IF
+
+	20:
+		StateTasksComplete := TRUE;
+END_CASE
+
+SUPER^.Aborting();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Clearing" Id="{00b4c057-1c77-497e-ad7c-49ae2f8309bf}" FolderPath="Acting States\">
+      <Declaration><![CDATA[//! @summary This method contains code which will execute when this PackML module is in the <b>Clearing</b> state
+METHOD PROTECTED Clearing
+VAR
+	i				: UDINT;
+	SubModulesReady : BOOL := TRUE;
+END_VAR
+
+VAR_INST
+
+END_VAR
+
+(*! <description> <b>Note:</b> The <i>Clear</i> command can also be thought of as a <i>fault reset</i> depite the ambiguity in the naming of the <i>Reset</i> state. 
+<table> 
+	<tr>
+		<th> Previous State </th>
+		<th> Transition In </th>
+		<th> Transition Out </th>
+		<th> Next State  </th> 
+	</tr>
+	<tr>
+		<td> Aborted </td>
+		<td> Clear Command </td> 
+		<td> State Complete </td>
+		<td> Stopped </td> 
+	</tr>
+</table>
+This method is called as required by <c>StateControl()</c>
+</description> 
+
+*)]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// CASE _CurrentMode OF
+// 	E_PMLUnitMode.ePMLUnitMode_Production:
+		CASE DescendantSequenceState OF
+			0: //Init
+				NoStateTasksToComplete := FALSE;
+
+				//Reset Axes and  CA Group
+				SpinAxis.Reset();
+				DescendantSequenceState := DescendantSequenceState + 10;
+
+			10: // Done	
+				StateTasksComplete := TRUE;
+		END_CASE
+
+// END_CASE
+
+SUPER^.Clearing();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CyclicLogic" Id="{f349efda-102a-4c03-85f1-b156c57de820}">
+      <Declaration><![CDATA[METHOD CyclicLogic
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[SUPER^.CyclicLogic();
+
+TON_Delay();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Execute" Id="{4a8447c7-4bba-456b-ae99-02b9655bd430}" FolderPath="Waiting States\">
+      <Declaration><![CDATA[//! @summary This method contains code which will execute when this PackML module is in the <b>Execute</b> state
+METHOD PROTECTED Execute
+VAR
+	i : UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE DescendantSequenceState OF
+	0:	// Start Spinning
+		SpinAxis.MoveVelocity(SpinVelocity, TRUE);
+		TON_Delay.IN				:= TRUE;
+		DescendantSequenceState		:= DescendantSequenceState + 10;
+
+	10:	// Trigger Images
+		IF TON_Delay.Q THEN
+			IF SpinAxis.SetPositionModulo > ImageCaptureAngle AND _SpinAxisPositionModulo < ImageCaptureAngle THEN
+
+				// Trigger Image
+				Camera.TriggerImage	:= TRUE;
+
+				// for xfc
+				// add slots to camera process image
+				// xfc fb will output time
+				// convert that to ulint with fb called "extenddctime" or similar
+				// sent that dc time off to camera
+
+				// xfc fb is non-modulo, so need to modulo 
+				// modturns is a funcation that calculates the number of turns, to un-modulo a target position (in tc2_math)
+				// tc2_math also has mod_abs that takes absolute position and modulo factor and tells you where in modulo position you are
+				
+
+				TON_Delay(IN 		:= FALSE);
+				TON_Delay.IN		:= TRUE;
+			END_IF
+		ELSE
+			Camera.TriggerImage		:= FALSE;
+		END_IF
+
+END_CASE
+
+_SpinAxisPositionModulo	:= SpinAxis.SetPositionModulo;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Initialize" Id="{735d1fea-bfd6-4ba8-b1c5-4688da7cba47}" FolderPath="Acting States\">
+      <Declaration><![CDATA[(* Basic module initialization logic*)
+METHOD PROTECTED Initialize : BOOL]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Initialize := FALSE;
+CASE DescendantSequenceState OF
+	0:
+		RegisterComponent(Component := SpinAxis);
+		RegisterComponent(Component := Camera);
+		DescendantSequenceState := DescendantSequenceState + 10;
+
+	10:
+		IF SUPER^.Initialize() THEN
+			DescendantSequenceState := DescendantSequenceState + 10;
+		END_IF
+
+	20:
+		Initialize := TRUE;
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Resetting" Id="{c9015cb7-7c60-4a02-a992-009fb7a3167f}" FolderPath="Acting States\">
+      <Declaration><![CDATA[METHOD PROTECTED Resetting
+VAR_INST
+	i			 : UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE DescendantSequenceState OF
+	0: //Init
+		NoStateTasksToComplete := FALSE;
+		DescendantSequenceState := DescendantSequenceState + 10;
+
+	10: //Reset Everything
+		IF SpinAxis.Enable() AND Camera.Reset() THEN
+			DescendantSequenceState := DescendantSequenceState + 10;
+		END_IF
+
+	20: //Clearing complete
+		StateTasksComplete := TRUE;
+
+END_CASE
+
+SUPER^.Resetting();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Starting" Id="{0102240e-1ac7-403e-9ddc-852ca008333e}" FolderPath="Acting States\">
+      <Declaration><![CDATA[METHOD PROTECTED Starting
+VAR_INST
+	i		  : UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE DescendantSequenceState OF
+	0:
+		NoStateTasksToComplete	:= FALSE;
+		DescendantSequenceState := 10;
+		i						:= 1;
+
+	10: //Set Axis Parameters
+		SpinAxis.Velocity		:= 180;
+		SpinAxis.Acceleration	:= 360;
+		SpinAxis.Deceleration	:= 360;
+		SpinAxis.Jerk			:= 1000;
+		TON_Delay.PT			:= T#1S;
+		DescendantSequenceState := DescendantSequenceState + 10;
+
+	20: // Start Running Vision
+		Camera.RunVision		:= TRUE;
+		DescendantSequenceState := DescendantSequenceState + 10;
+
+	30: // check that vision is running
+		IF Camera.CameraState = TCVN_CS_ACQUIRING THEN
+			DescendantSequenceState := DescendantSequenceState + 10;
+		END_IF
+
+	40: //Cleanup mover queues
+		StateTasksComplete 		:= TRUE;
+
+END_CASE
+
+SUPER^.Starting();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
