@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_VisionController" Id="{38653925-2c14-40fc-aead-2847ea230b56}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_VisionController EXTENDS FB_VisionCameraBase
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="ProcessImage" Id="{f3614d49-889b-4492-88a4-066783cb385b}">
+      <Declaration><![CDATA[METHOD ProcessImage
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

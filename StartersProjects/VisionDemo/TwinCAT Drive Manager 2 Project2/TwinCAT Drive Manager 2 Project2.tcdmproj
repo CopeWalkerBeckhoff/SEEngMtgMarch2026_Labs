@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Name>Drive Manager 2</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3f08fb55-213e-4686-9f9c-6aee9c40faf6}</ProjectGuid>
+    <TcPath>..\VisionOrientationDemo\VisionOrientationDemo.tsproj</TcPath>
+    <AssemblyName>TwinCAT Drive Manager 2 Project2</AssemblyName>
+    <RootNamespace>TwinCAT Drive Manager 2 Project2</RootNamespace>
+    <SaveDriveDataAsFiles>False</SaveDriveDataAsFiles>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Term 2 %28ELM7212-0010%29.tcdmdrv">
+      <SubType>Content</SubType>
+      <IoItemPathName>TIID^Device 2 (EtherCAT)^Term 1 (EK1818)^Term 2 (ELM7212-0010)</IoItemPathName>
+    </Content>
+    <Content Include="Term 5 %28ELM7212-0010%29.tcdmdrv">
+      <SubType>Content</SubType>
+      <IoItemPathName>TIID^Device 2 (EtherCAT)^Term 4 (EK1818)^Term 5 (ELM7212-0010)</IoItemPathName>
+    </Content>
+  </ItemGroup>
+</Project>
