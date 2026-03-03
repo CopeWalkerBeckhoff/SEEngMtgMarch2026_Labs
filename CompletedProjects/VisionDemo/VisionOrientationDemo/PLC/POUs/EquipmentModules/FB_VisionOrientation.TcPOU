@@ -3,12 +3,14 @@
   <POU Name="FB_VisionOrientation" Id="{448371c6-13eb-43c4-a0ce-ebb192d17413}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_VisionOrientation EXTENDS FB_PackML_BaseModule
 VAR
-	SpinAxis			: FB_Component_BasicAxis;
-	Camera				: FB_PlcCameraBase;
-	TON_Delay			: TON;
+	SpinAxis				: FB_Component_BasicAxis;
+	Camera					: FB_PlcCameraBase;
+	TON_Delay				: TON;
 	_SpinAxisPositionModulo	: LREAL;
-	ImageCaptureAngle	: LREAL := 130;
-	SpinVelocity		: LREAL := 500;
+	ImageCaptureAngle		: LREAL := 130;
+	SpinVelocity			: LREAL := 500;
+	CameraTriggerTimestamp	AT %Q* : T_DCTIME;
+	TimeOfPosition			: XFC_TimeOfPosition;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
@@ -108,13 +110,15 @@ TON_Delay();]]></ST>
 METHOD PROTECTED Execute
 VAR
 	i : UDINT;
+	NumberOfTurns			: UDINT;
+	ImageCaptureAngleCalc	: LREAL;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[CASE DescendantSequenceState OF
 	0:	// Start Spinning
 		SpinAxis.MoveVelocity(SpinVelocity, TRUE);
 		TON_Delay.IN				:= TRUE;
-		DescendantSequenceState		:= DescendantSequenceState + 10;
+		DescendantSequenceState		:= DescendantSequenceState + 20;
 
 	10:	// Trigger Images bad way
 		IF TON_Delay.Q THEN
@@ -132,27 +136,12 @@ END_VAR]]></Declaration>
 
 	20:	// Trigger Images good way
 		IF TON_Delay.Q THEN
-			IF SpinAxis.SetPositionModulo > ImageCaptureAngle AND _SpinAxisPositionModulo < ImageCaptureAngle THEN
-
-				// Trigger Image
-				Camera.TriggerImage	:= TRUE;
-
-				// for xfc
-				// add slots to camera process image
-				// xfc fb will output time
-				// convert that to ulint with fb called "extenddctime" or similar
-				// sent that dc time off to camera
-
-				// xfc fb is non-modulo, so need to modulo 
-				// modturns is a funcation that calculates the number of turns, to un-modulo a target position (in tc2_math)
-				// tc2_math also has mod_abs that takes absolute position and modulo factor and tells you where in modulo position you are
-				
-
-				TON_Delay(IN 		:= FALSE);
-				TON_Delay.IN		:= TRUE;
-			END_IF
-		ELSE
-			Camera.TriggerImage		:= FALSE;
+			NumberOfTurns	:= MODTURNS(SpinAxis.SetPosition, 360);
+			ImageCaptureAngleCalc	:= ((NumberOfTurns + 1) * 360.0) + ImageCaptureAngle;
+			TimeOfPosition(Axis 	:= SpinAxis.Axis, Position := ImageCaptureAngleCalc);
+			CameraTriggerTimestamp	:= XFC_ExtendDcTime(TimeOfPosition.DcTime);
+			TON_Delay(IN 		:= FALSE);
+			TON_Delay.IN		:= TRUE;
 		END_IF
 
 
@@ -222,16 +211,20 @@ SUPER^.Resetting();]]></ST>
 		TON_Delay.PT			:= T#1S;
 		DescendantSequenceState := DescendantSequenceState + 10;
 
-	20: // Start Running Vision
+	20: IF SpinAxis.Home() THEN
+			DescendantSequenceState := DescendantSequenceState + 10;
+		END_IF
+
+	30: // Start Running Vision
 		Camera.RunVision		:= TRUE;
 		DescendantSequenceState := DescendantSequenceState + 10;
 
-	30: // check that vision is running
+	40: // check that vision is running
 		IF Camera.CameraState = TCVN_CS_ACQUIRING THEN
 			DescendantSequenceState := DescendantSequenceState + 10;
 		END_IF
 
-	40: //Cleanup mover queues
+	50: //Cleanup mover queues
 		StateTasksComplete 		:= TRUE;
 
 END_CASE

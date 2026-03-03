@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.14">
+  <POU Name="FB_Blinker" Id="{5d5c7b60-d19f-4dd0-9617-1f387e579ef8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Blinker
+VAR_INPUT
+	TmrPreset : TIME;
+END_VAR
+VAR_OUTPUT
+	xOut : BOOL;
+END_VAR
+VAR
+	xBlink : BOOL;	
+	xBlinkOFF : BOOL;	
+	BlinkTmr : TON;
+	BlinkOffTmr : TON;
+	BlinkDly : TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[BlinkDly(IN:= TRUE, PT:= T#1S , Q=> , ET=> );
+
+IF BlinkDly.Q THEN
+	BlinkTmr(IN:= NOT xBlinkOFF , PT:= TmrPreset, Q=> xBlink , ET=> );
+	BlinkOFFTmr(IN:= xBlink, PT:= TmrPreset, Q=> xBlinkOFF , ET=> );
+	xOut := xBlink;
+ELSE
+	xBlink := FALSE;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_Blinker">
+      <LineId Id="58" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="60" Count="1" />
+      <LineId Id="54" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

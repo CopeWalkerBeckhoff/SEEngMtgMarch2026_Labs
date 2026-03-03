@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_DataSetFifo" Id="{092189ef-02ad-436a-97e7-d49ebba584dc}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_DataSetFifo
+VAR_INPUT
+	bOverwrite	: BOOL;
+	in 			: LREAL;
+END_VAR
+VAR_OUTPUT
+	bOk			: BOOL;
+	nCount		: UDINT;
+	nLoad		: UDINT;
+	out			: LREAL;
+END_VAR
+VAR
+	arrBuffer 	: ARRAY[0..MAX_BUFFER_SIZE] OF BYTE; (* Buffer memory used by FB_MemRingBuffer function block *)
+	fbBuffer	: FB_MemRingBuffer;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[;]]></ST>
+    </Implementation>
+    <Action Name="A_Add" Id="{d920c5e0-799c-437f-bb5e-cb9044ebe280}">
+      <Implementation>
+        <ST><![CDATA[fbBuffer.A_AddTail( pWrite:= ADR( in ),
+					cbWrite:= SIZEOF( in ),
+					pBuffer:= ADR( arrBuffer ),
+					cbBuffer:= SIZEOF( arrBuffer ),
+					bOk=> bOk,
+					nCount => nCount );
+
+
+IF NOT bOk THEN (* overflow ? *)
+	IF bOverwrite THEN
+		fbBuffer.A_RemoveHead(); (* remove one oldest entry *)
+
+		fbBuffer.A_AddTail( bOk => bOk, nCount => nCount );
+	END_IF
+END_IF
+
+
+
+nLoad := (fbBuffer.cbSize * 100) / MAX_BUFFER_SIZE;]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Get" Id="{7f54a9ce-157b-43e1-a729-0086a11d6482}">
+      <Implementation>
+        <ST><![CDATA[fbBuffer.A_GetHead( pRead:= ADR( out ),
+					cbRead:= SIZEOF( out ),
+					pBuffer:= ADR( arrBuffer ),
+					cbBuffer:= SIZEOF( arrBuffer ),
+					bOk=> bOk,
+					nCount => nCount );
+
+nLoad := (fbBuffer.cbSize * 100) / MAX_BUFFER_SIZE;]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Remove" Id="{a1b1bcc7-f977-49be-8343-ed1f9f37f03b}">
+      <Implementation>
+        <ST><![CDATA[fbBuffer.A_RemoveHead( 	pRead:= ADR( out ),
+						cbRead:= SIZEOF( out ),
+						pBuffer:= ADR( arrBuffer ),
+						cbBuffer:= SIZEOF( arrBuffer ),
+						bOk=> bOk,
+						nCount => nCount );
+
+nLoad := (fbBuffer.cbSize * 100) / MAX_BUFFER_SIZE;]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Reset" Id="{7735feea-b0fe-4fde-b9f6-587d0ae9e141}">
+      <Implementation>
+        <ST><![CDATA[MEMSET( ADR( arrBuffer ), 0, SIZEOF( arrBuffer ) ); (* reset (optional) internal buffer *)
+
+fbBuffer.A_Reset( 	bOk=> bOk,
+					nCount => nCount );
+
+nLoad := (fbBuffer.cbSize * 100) / MAX_BUFFER_SIZE;]]></ST>
+      </Implementation>
+    </Action>
+  </POU>
+</TcPlcObject>

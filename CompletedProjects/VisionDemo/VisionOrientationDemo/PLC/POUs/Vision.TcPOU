@@ -6,8 +6,7 @@ VAR
 	VisionBase	: FB_VisionController;
 	_ImageCount	: ULINT;
 	ipImageResDisp	: ITcVnDisplayableImage;
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[VisionBase.CyclicLogic();
 

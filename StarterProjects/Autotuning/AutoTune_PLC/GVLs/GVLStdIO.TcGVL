@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.14">
+  <GVL Name="GVLStdIO" Id="{2f4147fb-4c19-4eb1-a77e-51e019e9ea0c}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	_ResetLt AT %Q* : BOOL;
+	_PotInput AT %I* : INT;
+	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
