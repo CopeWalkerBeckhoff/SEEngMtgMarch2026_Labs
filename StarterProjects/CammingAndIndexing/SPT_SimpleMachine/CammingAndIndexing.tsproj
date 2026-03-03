@@ -3621,7 +3621,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{80907B98-0FB4-4719-894B-7FB8A4A607F3}" Name="PLC" PrjFilePath="PLC\PLC.plcproj" TmcFilePath="PLC\PLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{7EEE2E7B-BBAB-952F-D9BB-B2112DA2F07E}" TmcPath="PLC\PLC.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{8C2E43F6-C08A-E3BF-6594-61B1C39E3C73}" TmcPath="PLC\PLC.tmc">
 					<Name>PLC Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">
@@ -3629,14 +3629,6 @@ External Setpoint Generation:
 						<Var>
 							<Name>MAIN.SafetyFBReset</Name>
 							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.Machine.CamModule.CamShaft.BasicAxis._Axis.PlcToNc</Name>
-							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.Machine.CamModule.CamFollower.CamSlaveAxis._Axis.PlcToNc</Name>
-							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.Machine.BeltIndexer.BeltAxis.BasicAxis._Axis.PlcToNc</Name>
@@ -3658,14 +3650,6 @@ External Setpoint Generation:
 						<Var>
 							<Name>MAIN.SafetyOK</Name>
 							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.Machine.CamModule.CamShaft.BasicAxis._Axis.NcToPlc</Name>
-							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.Machine.CamModule.CamFollower.CamSlaveAxis._Axis.NcToPlc</Name>
-							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.Machine.BeltIndexer.BeltAxis.BasicAxis._Axis.NcToPlc</Name>
@@ -3907,7 +3891,7 @@ External Setpoint Generation:
 								<ModuleIdent>200</ModuleIdent>
 								<Module Id="#x03090002" Type="FSOUT" Class="FSOUT">
 									<Name>Module 2 (FSOUT)</Name>
-									<ImageId>549</ImageId>
+									<ImageId>548</ImageId>
 									<ModuleData>02000000c8000000000004000000000000000000000000000000000000000000</ModuleData>
 									<PdoIndex>6142</PdoIndex>
 								</Module>
@@ -3917,7 +3901,7 @@ External Setpoint Generation:
 								<ModuleIdent>1950</ModuleIdent>
 								<Module Id="#x03090003" Type="DEVICEIO" Class="DEVICEIO">
 									<Name>Module 3 (DEVICEIO)</Name>
-									<ImageId>549</ImageId>
+									<ImageId>548</ImageId>
 									<ModuleData>020000009e070000000004000000000000000000000000000000000000000000</ModuleData>
 									<PdoIndex>7166</PdoIndex>
 								</Module>
@@ -3927,7 +3911,7 @@ External Setpoint Generation:
 								<ModuleIdent>691</ModuleIdent>
 								<Module Id="#x03090004" Type="FSLOGIC" Class="FSLOGIC">
 									<Name>Module 4 (FSLOGIC)</Name>
-									<ImageId>549</ImageId>
+									<ImageId>548</ImageId>
 									<ModuleData>02000000b3020000000004000000000000000000000000000000000000000000</ModuleData>
 									<PdoIndex>7167</PdoIndex>
 									<PdoIndex>6143</PdoIndex>
@@ -6573,7 +6557,7 @@ External Setpoint Generation:
 								<ModuleIdent>6946916</ModuleIdent>
 								<Module Id="#x03090001" Type="DeviceMain" Class="">
 									<Name>Device</Name>
-									<ImageId>553</ImageId>
+									<ImageId>552</ImageId>
 									<ModuleData>0200000064006a00000004000000000000000000000000000000000000000000</ModuleData>
 									<PdoIndex>6656</PdoIndex>
 									<PdoIndex>6880</PdoIndex>
@@ -6670,7 +6654,7 @@ External Setpoint Generation:
 								<ModuleIdent>6750321</ModuleIdent>
 								<Module Id="#x0309000e" Type="SafeMotion" Class="113">
 									<Name>Device (Safety)</Name>
-									<ImageId>553</ImageId>
+									<ImageId>552</ImageId>
 									<ModuleData>0200000071006a0000002c000000000000000000000000000000000000000000</ModuleData>
 									<PdoIndex>7104</PdoIndex>
 									<PdoIndex>7105</PdoIndex>
@@ -6904,7 +6888,7 @@ External Setpoint Generation:
 								<ModuleIdent>6947816</ModuleIdent>
 								<Module Id="#x03090023" Type="AxisMain" Class="">
 									<Name>Ch A</Name>
-									<ImageId>553</ImageId>
+									<ImageId>552</ImageId>
 									<ModuleData>02000000e8036a00000004000000000000000000000000000000000000000000</ModuleData>
 									<PdoIndex>6688</PdoIndex>
 									<PdoIndex>6912</PdoIndex>
@@ -6935,7 +6919,7 @@ External Setpoint Generation:
 								<ModuleIdent>6949816</ModuleIdent>
 								<Module Id="#x03090026" Type="Interpolator" Class="">
 									<Name>Ch A</Name>
-									<ImageId>553</ImageId>
+									<ImageId>552</ImageId>
 									<ModuleData>02000000b80b6a00000004000000000000000000000000000000000000000000</ModuleData>
 									<PdoIndex>6691</PdoIndex>
 									<PdoIndex>6915</PdoIndex>
@@ -6966,7 +6950,7 @@ External Setpoint Generation:
 								<ModuleIdent>6952816</ModuleIdent>
 								<Module Id="#x03090029" Type="PositionControl" Class="">
 									<Name>Ch A</Name>
-									<ImageId>553</ImageId>
+									<ImageId>552</ImageId>
 									<ModuleData>0200000070176a00000004000000000000000000000000000000000000000000</ModuleData>
 									<PdoIndex>6694</PdoIndex>
 									<PdoIndex>6918</PdoIndex>
@@ -7063,7 +7047,7 @@ External Setpoint Generation:
 								<ModuleIdent>6964816</ModuleIdent>
 								<Module Id="#x03090031" Type="TorqueControl" Class="">
 									<Name>Ch A</Name>
-									<ImageId>553</ImageId>
+									<ImageId>552</ImageId>
 									<ModuleData>0200000050466a00000004000000000000000000000000000000000000000000</ModuleData>
 									<PdoIndex>6706</PdoIndex>
 									<PdoIndex>6930</PdoIndex>
@@ -7198,7 +7182,7 @@ External Setpoint Generation:
 								<ModuleIdent>6947816</ModuleIdent>
 								<Module Id="#x0309003d" Type="AxisMain" Class="">
 									<Name>Ch B</Name>
-									<ImageId>553</ImageId>
+									<ImageId>552</ImageId>
 									<ModuleData>02000000e8036a00000004000000000000000000000000000000000000000000</ModuleData>
 									<PdoIndex>6720</PdoIndex>
 									<PdoIndex>6944</PdoIndex>
@@ -7229,7 +7213,7 @@ External Setpoint Generation:
 								<ModuleIdent>6949816</ModuleIdent>
 								<Module Id="#x03090040" Type="Interpolator" Class="">
 									<Name>Ch B</Name>
-									<ImageId>553</ImageId>
+									<ImageId>552</ImageId>
 									<ModuleData>02000000b80b6a00000004000000000000000000000000000000000000000000</ModuleData>
 									<PdoIndex>6723</PdoIndex>
 									<PdoIndex>6947</PdoIndex>
@@ -7260,7 +7244,7 @@ External Setpoint Generation:
 								<ModuleIdent>6952816</ModuleIdent>
 								<Module Id="#x03090043" Type="PositionControl" Class="">
 									<Name>Ch B</Name>
-									<ImageId>553</ImageId>
+									<ImageId>552</ImageId>
 									<ModuleData>0200000070176a00000004000000000000000000000000000000000000000000</ModuleData>
 									<PdoIndex>6726</PdoIndex>
 									<PdoIndex>6950</PdoIndex>
@@ -7357,7 +7341,7 @@ External Setpoint Generation:
 								<ModuleIdent>6964816</ModuleIdent>
 								<Module Id="#x0309004b" Type="TorqueControl" Class="">
 									<Name>Ch B</Name>
-									<ImageId>553</ImageId>
+									<ImageId>552</ImageId>
 									<ModuleData>0200000050466a00000004000000000000000000000000000000000000000000</ModuleData>
 									<PdoIndex>6738</PdoIndex>
 									<PdoIndex>6962</PdoIndex>
@@ -8614,7 +8598,7 @@ External Setpoint Generation:
 									<ModuleIdent>6946916</ModuleIdent>
 									<Module Id="#x03090057" Type="DeviceMain" Class="">
 										<Name>Device</Name>
-										<ImageId>554</ImageId>
+										<ImageId>553</ImageId>
 										<ModuleData>0200000064006a00000004000000000000000000000000000000000000000000</ModuleData>
 										<PdoIndex>6656</PdoIndex>
 										<PdoIndex>6880</PdoIndex>
@@ -8709,7 +8693,7 @@ External Setpoint Generation:
 									<ModuleIdent>6815859</ModuleIdent>
 									<Module Id="#x03090061" Type="SafeMotionAMP" Class="115">
 										<Name>Device (Safety)</Name>
-										<ImageId>554</ImageId>
+										<ImageId>553</ImageId>
 										<ModuleData>020000007300690000002c000000000000000000000000000000000000000000</ModuleData>
 										<PdoIndex>7104</PdoIndex>
 										<PdoIndex>7105</PdoIndex>
@@ -8927,7 +8911,7 @@ External Setpoint Generation:
 									<ModuleIdent>6947817</ModuleIdent>
 									<Module Id="#x03090076" Type="AxisMainAMP" Class="">
 										<Name>Ch A</Name>
-										<ImageId>554</ImageId>
+										<ImageId>553</ImageId>
 										<ModuleData>02000000e9036a00000004000000000000000000000000000000000000000000</ModuleData>
 										<PdoIndex>6688</PdoIndex>
 										<PdoIndex>6912</PdoIndex>
@@ -8958,7 +8942,7 @@ External Setpoint Generation:
 									<ModuleIdent>6949816</ModuleIdent>
 									<Module Id="#x03090079" Type="Interpolator" Class="">
 										<Name>Ch A</Name>
-										<ImageId>554</ImageId>
+										<ImageId>553</ImageId>
 										<ModuleData>02000000b80b6a00000004000000000000000000000000000000000000000000</ModuleData>
 										<PdoIndex>6691</PdoIndex>
 										<PdoIndex>6915</PdoIndex>
@@ -8989,7 +8973,7 @@ External Setpoint Generation:
 									<ModuleIdent>6952816</ModuleIdent>
 									<Module Id="#x0309007c" Type="PositionControl" Class="">
 										<Name>Ch A</Name>
-										<ImageId>554</ImageId>
+										<ImageId>553</ImageId>
 										<ModuleData>0200000070176a00000004000000000000000000000000000000000000000000</ModuleData>
 										<PdoIndex>6694</PdoIndex>
 										<PdoIndex>6918</PdoIndex>
@@ -9086,7 +9070,7 @@ External Setpoint Generation:
 									<ModuleIdent>6964816</ModuleIdent>
 									<Module Id="#x03090084" Type="TorqueControl" Class="">
 										<Name>Ch A</Name>
-										<ImageId>554</ImageId>
+										<ImageId>553</ImageId>
 										<ModuleData>0200000050466a00000004000000000000000000000000000000000000000000</ModuleData>
 										<PdoIndex>6706</PdoIndex>
 										<PdoIndex>6930</PdoIndex>
@@ -9246,11 +9230,11 @@ External Setpoint Generation:
 			</OwnerB>
 		</OwnerA>
 		<OwnerA Name="TIID^Device 3 (EtherCAT)">
-			<OwnerB Name="TIID^Device 3 (EtherCAT)^Term 5 (AX8620-0000-0103)^Drive 6 (AX8206-0200-0106)">
-				<Link VarA="Term 5 (AX8620-0000-0103)^PSM Controlword for axis^Controlword for axis" VarB="Device^DeviceMain Outputs^Power supply controlword"/>
+			<OwnerB Name="TIID^Device 3 (EtherCAT)^Term 5 (AX8620-0000-0103)">
+				<Link VarA="Term 5 (AX8620-0000-0103)^Drive 6 (AX8206-0200-0106)^Device^DeviceMain Outputs^Power supply controlword" VarB="PSM Controlword for axis^Controlword for axis"/>
+				<Link VarA="Term 5 (AX8620-0000-0103)^Term 7 (AX8831-0000-0201)^PSM Controlword out^Controlword out" VarB="PSM Controlword for axis^Controlword for axis"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Term 5 (AX8620-0000-0103)^Term 7 (AX8831-0000-0201)">
-				<Link VarA="Term 5 (AX8620-0000-0103)^PSM Controlword for axis^Controlword for axis" VarB="PSM Controlword out^Controlword out"/>
 				<Link VarA="Term 5 (AX8620-0000-0103)^Term 7 (AX8831-0000-0201)^Drive 8 (AMP8000-0030-0106)^Device^DeviceMain Outputs^Power supply controlword" VarB="PSM Controlword in^Controlword 1 in"/>
 			</OwnerB>
 		</OwnerA>
@@ -9327,14 +9311,6 @@ External Setpoint Generation:
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Term 5 (AX8620-0000-0103)^Term 7 (AX8831-0000-0201)^Drive 8 (AMP8000-0030-0106)">
 				<Link VarA="PlcTask Outputs^MAIN.SafetyGroupAutoReset.Reset" VarB="Device (Safety)^Standard Outputdata^Standard In Var 3"/>
 				<Link VarA="PlcTask Outputs^MAIN.SafetyGroup_Main.Run" VarB="Device (Safety)^Standard Outputdata^Standard In Var 2"/>
-			</OwnerB>
-			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Cam_Master">
-				<Link VarA="PlcTask Inputs^MAIN.Machine.CamModule.CamShaft.BasicAxis._Axis.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="PlcTask Outputs^MAIN.Machine.CamModule.CamShaft.BasicAxis._Axis.PlcToNc" VarB="Inputs^FromPlc"/>
-			</OwnerB>
-			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Cam_Slave">
-				<Link VarA="PlcTask Inputs^MAIN.Machine.CamModule.CamFollower.CamSlaveAxis._Axis.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="PlcTask Outputs^MAIN.Machine.CamModule.CamFollower.CamSlaveAxis._Axis.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^TouchProbe">
 				<Link VarA="PlcTask Inputs^MAIN.Machine.BeltIndexer.BeltAxis.BasicAxis._Axis.NcToPlc" VarB="Outputs^ToPlc"/>

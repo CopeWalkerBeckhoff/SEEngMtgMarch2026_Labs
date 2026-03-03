@@ -5,8 +5,6 @@
 VAR
 	BeltAxis	: FB_Component_BasicAxis;
 
-	TouchProbe			: MC_TouchProbe;
-	TouchProbeConfig	: TRIGGER_REF;
 	fbFifo 				: FB_DataSetFifo := ( bOverwrite := TRUE );
 	arrBuffer 			: ARRAY[0..MAX_BUFFER_SIZE] OF BYTE; (* Buffer memory used by FB_MemRingBuffer function block *)
 
@@ -35,7 +33,6 @@ END_VAR]]></Declaration>
 
 	10:
 		IF BeltAxis.Disable() THEN
-			TouchProbe.Execute		:= FALSE;
 			NewRecordedPosition		:= 0;
 			OldRecordedPosition		:= 0;
 			StateTasksComplete 		:= TRUE;
@@ -110,7 +107,6 @@ END_VAR
       <Implementation>
         <ST><![CDATA[SUPER^.CyclicLogic();
 
-TouchProbe(Axis := BeltAxis.Axis, TriggerInput := TouchProbeConfig);
 fbFifo();
 TON_Dwell();]]></ST>
       </Implementation>
@@ -133,7 +129,6 @@ END_CASE	*)
 CASE DescendantSequenceState OF
 	0:	// Start Moving
 		BeltAxis.MoveVelocity(250, TRUE);
-		TouchProbe.Execute		:= TRUE;
 		DescendantSequenceState	:= DescendantSequenceState + 10;
 
 	10: // Start buffering positions and moving to them
@@ -158,10 +153,9 @@ CASE DescendantSequenceState OF
 
 END_CASE
 
-IF TouchProbe.Done THEN
-	NewRecordedPosition	:= TouchProbe.RecordedData.AbsolutePosition;
-	fbFifo.A_Add(In := NewRecordedPosition);
-END_IF
+//run this with new recorded positions from touchprobe	
+//fbFifo.A_Add(In := NewRecordedPosition);
+
 
 ]]></ST>
       </Implementation>
@@ -177,9 +171,7 @@ CASE DescendantSequenceState OF
 		DescendantSequenceState := DescendantSequenceState + 10;
 
 	10: // Touch Probe Configuration
-		TouchProbeConfig.SignalSource	:= SignalSource_DriveDefined;
-		TouchProbeconfig.Mode			:= TOUCHPROBEMODE_CONTINOUS;
-		TON_Dwell.PT					:= T#500ms;
+		TON_Dwell.PT					:= T#500MS;
 		DescendantSequenceState 		:= DescendantSequenceState + 10;
 
 	20:
@@ -251,8 +243,6 @@ END_VAR]]></Declaration>
 				DescendantSequenceState := DescendantSequenceState + 10;
 
 			20: // Start Touchprobe and clear buffer
-				TouchProbe.WindowOnly		:= FALSE;
-				TouchProbeConfig.EncoderID	:= 4;
 				DescendantSequenceState 	:= DescendantSequenceState + 10;
 				
 			30: // Finsihed
