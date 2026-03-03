@@ -5,8 +5,7 @@
 VAR
 	PositionAxis	: FB_Component_BasicAxis;
 	TorqueAxis		: FB_Component_BasicAxis;
-	SetTorque		: REAL	:= 25;
-	TorqueControl	: MC_TorqueControl;
+	SetTorque		: REAL	:= 35;
 	TON_Dwell		: TON;
 END_VAR]]></Declaration>
     <Implementation>
@@ -27,7 +26,7 @@ END_VAR]]></Declaration>
 		DescendantSequenceState := DescendantSequenceState + 10;
 
 	10:
-		IF PositionAxis.Disable() AND TorqueAxis.Disable() THEN
+		IF PositionAxis.Disable() THEN
 			StateTasksComplete 		:= TRUE;
 			DescendantSequenceState := DescendantSequenceState + 10;
 		END_IF
@@ -73,7 +72,6 @@ This method is called as required by <c>StateControl()</c>
 
 				//Reset Axes and  CA Group
 				PositionAxis.Reset();
-				TorqueAxis.Reset();
 				DescendantSequenceState := DescendantSequenceState + 10;
 
 			10: // Done	
@@ -104,36 +102,38 @@ VAR
 	i : UDINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[CASE _CurrentMode OF
+        <ST><![CDATA[(*CASE _CurrentMode OF
 	E_PMLUnitMode.Production:
-		0:	PositionAxis.MoveAbsolute(360, TRUE);
-			DescendantSequenceState	:= DescendantSequenceState + 10;
-	
-		10:	IF PositionAxis.InPosition AND PositionAxis.SetPosition > 350 THEN
-				TON_Dwell.IN			:= TRUE;
-				DescendantSequenceState	:= DescendantSequenceState + 10;
-			END_IF
-	
-		20: IF TON_Dwell.Q THEN
-				TON_Dwell.IN	:= FALSE;
-				PositionAxis.MoveAbsolute(0, TRUE);
-				DescendantSequenceState	:= DescendantSequenceState + 10;
-			END_IF
-	
-		30:	IF PositionAxis.InPosition AND PositionAxis.SetPosition < 10 THEN
-				TON_Dwell.IN			:= TRUE;
-				DescendantSequenceState	:= DescendantSequenceState + 10;
-			END_IF
-	
-		40: IF TON_Dwell.Q THEN
-				TON_Dwell.IN	:= FALSE;
-				PositionAxis.MoveAbsolute(360, TRUE);
-				DescendantSequenceState	:= 10;
-			END_IF
 
 	E_PMLUnitMode.Manual:
 		PositionAxis.Disable();
+END_CASE*)
 
+CASE DescendantSequenceState OF
+0:	PositionAxis.MoveAbsolute(360, TRUE);
+	DescendantSequenceState	:= DescendantSequenceState + 10;
+
+10:	IF PositionAxis.InPosition AND PositionAxis.SetPosition > 350 THEN
+		TON_Dwell.IN			:= TRUE;
+		DescendantSequenceState	:= DescendantSequenceState + 10;
+	END_IF
+
+20: IF TON_Dwell.Q THEN
+		TON_Dwell.IN	:= FALSE;
+		PositionAxis.MoveAbsolute(0, TRUE);
+		DescendantSequenceState	:= DescendantSequenceState + 10;
+	END_IF
+
+30:	IF PositionAxis.InPosition AND PositionAxis.SetPosition < 10 THEN
+		TON_Dwell.IN			:= TRUE;
+		DescendantSequenceState	:= DescendantSequenceState + 10;
+	END_IF
+
+40: IF TON_Dwell.Q THEN
+		TON_Dwell.IN	:= FALSE;
+		PositionAxis.MoveAbsolute(360, TRUE);
+		DescendantSequenceState	:= 10;
+	END_IF
 END_CASE]]></ST>
       </Implementation>
     </Method>
@@ -171,13 +171,13 @@ END_VAR]]></Declaration>
 				DescendantSequenceState := DescendantSequenceState + 10;
 
 			10: //Enable Axes
-				IF PositionAxis.Enable() AND TorqueAxis.Enable() THEN
+				IF PositionAxis.Enable() THEN
 					DescendantSequenceState := DescendantSequenceState + 10;
 				END_IF
 
 			// Home Axes (set current position to 0)
 			20: // Home Right Axis
-				IF PositionAxis.Home() and torqueAxis.Home() THEN
+				IF PositionAxis.Home() THEN
 					DescendantSequenceState := DescendantSequenceState + 10;
 				END_IF
 
@@ -207,14 +207,6 @@ SUPER^.Resetting();]]></ST>
 				PositionAxis.Deceleration	:= 720;		TorqueAxis.Deceleration		:= 720;
 				PositionAxis.Jerk			:= 10000;	TorqueAxis.Jerk				:= 10000;
 
-				TorqueControl.Execute			:= TRUE;
-				TorqueControl.ContinuousUpdate	:= TRUE;
-				TorqueControl.Relative			:= FALSE;
-				TorqueControl.Torque			:= SetTorque;
-				TorqueControl.TorqueRamp		:= 1;
-				TorqueControl.VelocityLimitHigh	:= 360;
-				TorqueControl.VelocityLimitLow	:= 360;	
-
 				TON_Dwell.PT				:= t#250ms;
 				DescendantSequenceState 	:= DescendantSequenceState + 10;
 				StateTasksComplete 			:= TRUE;
@@ -241,10 +233,7 @@ SUPER^.Starting();]]></ST>
 				NoStateTasksToComplete	:= FALSE;
 				DescendantSequenceState := 10;
 
-			10: TorqueControl.Execute		:= FALSE;
-				DescendantSequenceState 	:= DescendantSequenceState + 10;
-
-			20: // Done
+			10: // Done
 				NoStateTasksToComplete		:= TRUE;
 
 		END_CASE
