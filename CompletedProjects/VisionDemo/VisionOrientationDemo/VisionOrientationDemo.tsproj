@@ -5819,7 +5819,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{80907B98-0FB4-4719-894B-7FB8A4A607F3}" Name="PLC" PrjFilePath="PLC\PLC.plcproj" TmcFilePath="PLC\PLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{75E4B229-9180-E1B1-ED85-74C06BEE8EEE}" TmcPath="PLC\PLC.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{49421D54-BF3C-0B09-5BFD-61810C461A8D}" TmcPath="PLC\PLC.tmc">
 					<Name>PLC Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" ContextId="1" AreaNo="17">
@@ -5909,30 +5909,6 @@ External Setpoint Generation:
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
 						<Var>
-							<Name>MAIN.ControlSourceHMI.MainPMLControl_Simplified.ResetPressed</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.ControlSourceHMI.MainPMLControl_Simplified.StartPressed</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.ControlSourceHMI.MainPMLControl_Simplified.StopPressed</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.ControlSourcePB.MainPMLControl_Simplified.ResetPressed</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.ControlSourcePB.MainPMLControl_Simplified.StartPressed</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.ControlSourcePB.MainPMLControl_Simplified.StopPressed</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>MAIN.Machine.VisionOrientation.SpinAxis.BasicAxis._Axis.NcToPlc</Name>
 							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 						</Var>
@@ -5960,6 +5936,30 @@ External Setpoint Generation:
 						<Var>
 							<Name>MAIN.Machine.VisionOrientation.Camera.VisionErrorID</Name>
 							<Type>UDINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.ControlSourceHMI.MainPMLControl_Simplified.ResetPressed</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.ControlSourceHMI.MainPMLControl_Simplified.StartPressed</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.ControlSourceHMI.MainPMLControl_Simplified.StopPressed</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.ControlSourcePB.MainPMLControl_Simplified.ResetPressed</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.ControlSourcePB.MainPMLControl_Simplified.StartPressed</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.ControlSourcePB.MainPMLControl_Simplified.StopPressed</Name>
+							<Type>BOOL</Type>
 						</Var>
 					</Vars>
 					<Contexts>

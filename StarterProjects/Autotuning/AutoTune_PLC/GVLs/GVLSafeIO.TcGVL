@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.14">
+  <GVL Name="GVLSafeIO" Id="{265c6413-46c2-42ec-8461-46154e77728b}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	
+	//TwinSAFE Group Signals
+	_TSG1_Diag AT %I* : USINT;
+	_TSG1_Run AT %Q* : BOOL;
+	_TSG1_ErrAck AT %Q* : BOOL;
+	_TSG1_esOut AT %I* : BOOL;
+	
+	//TwinSAFE Diagnostics
+	_TSG1_State AT %I* : USINT;
+	_TSG1_FB_Err AT %I* : BOOL;
+	_TSG1_Comm_Err AT %I* : BOOL;	
+	_TSG1_Other_Err AT %I* : BOOL;		
+
+	//Safe E-Stop FB Diagnostics
+	_es1Status AT %I* : BOOL;
+	_es2Status AT %I* : BOOL;
+	_pbRestart AT %I* : BOOL;
+	_esError AT %I* : BOOL;	
+
+
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

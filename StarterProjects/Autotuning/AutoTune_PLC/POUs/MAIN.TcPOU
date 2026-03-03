@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.17">
+  <POU Name="MAIN" Id="{cf43b9dd-c73b-4cb9-82e8-752dfac7e20c}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	_SpeedOverride : LREAL;
+	FastBlink: FB_Blinker;
+	SlowBlink: FB_Blinker;
+	
+	testtmr : TON;
+	
+	A1 : AXIS_REF;
+
+	//Enable
+	A1Pwr : MC_POWER;
+	bA1Enable: BOOL;
+	bA1PwrStatus: BOOL;
+	bA1PwrBusy: BOOL;
+	bA1PwrError: BOOL;
+	bA1PwrErrorId: UDINT;
+	
+	bA1PwrErrorLatch: BOOL;
+	
+	//Reset
+	A1Reset : MC_RESET;
+	bA1Reset: BOOL;
+	bA1ResetDone: BOOL;
+	bA1ResetBusy: BOOL;
+	bA1Error: BOOL;
+	bA1ErrorId: UDINT;
+	
+	//Jog
+	A1Jog : MC_JOG;
+	bA1JogFwd: BOOL;
+	bA1JogRev: BOOL;
+	bA1JogMode: E_JogMode := MC_JOGMODE_CONTINOUS;
+	bA1JogPosition: LREAL;
+	bA1JogVelocity: LREAL := 1000;
+	bA1JogAccel: LREAL := 5000;
+	bA1JogDecel: LREAL := 5000;
+	bA1JogJerk: LREAL := 10000;
+	bA1JogDone: BOOL;
+	bA1JogBusy: BOOL;
+	bA1JogActive: BOOL;
+	bA1JogCmdAborted: BOOL;
+	bA1JogError: BOOL;
+	bA1JogErrorId: UDINT;
+
+
+	bA1PwrErrorIdLatch: UDINT;
+	
+	EnableDly : TON;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+GVLSafeIO._TSG1_Run := TRUE;
+
+GVLSafeIO._TSG1_ErrAck := GVLSafeIO._pbRestart;
+
+//Make sure both contacts are in sync before pulsing light
+
+//Controls Blink Of PB Lt
+
+IF GVLSafeIO._TSG1_FB_Err OR GVLSafeIO._TSG1_Comm_Err OR GVLSafeIO._TSG1_Other_Err OR GVLSafeIO._esError THEN
+	FastBlink(TmrPreset:= T#100MS, xOut=> GVLStdIO._ResetLt);
+ELSIF NOT GVLSafeIO._TSG1_esOut AND GVLSafeIO._es1Status AND GVLSafeIO._es2Status THEN
+	SlowBlink(TmrPreset:= T#1S, xOut=> GVLStdIO._ResetLt);
+ELSIF NOT GVLSafeIO._es1Status OR NOT GVLSafeIO._es2Status THEN
+	GVLStdIO._ResetLt := FALSE;
+ELSIF GVLSafeIO._TSG1_esOut THEN
+	GVLStdIO._ResetLt := TRUE;
+END_IF
+
+
+
+IF NOT bA1Enable THEN
+	EnableDly(IN:= GVLSafeIO._pbRestart, PT:= T#2S, Q=> , ET=> );
+		IF EnableDly.Q THEN
+			bA1Enable := GVLSafeIO._pbRestart;
+		END_IF
+ELSIF NOT GVLSafeIO._TSG1_esOut THEN
+			bA1Enable := FALSE;
+END_IF
+
+bA1Reset := GVLSafeIO._pbRestart;
+
+//Scale POT to 0-100% for speed override.
+Scale();
+
+A1Pwr(
+	Axis:= A1, 
+	Enable:= bA1Enable, 
+	Enable_Positive:= TRUE, 
+	Enable_Negative:= TRUE, 
+	Override:= _SpeedOverride, 
+	Status=> bA1PwrStatus, 
+	Busy=> bA1PwrBusy, 
+	Error=> bA1PwrError, 
+	ErrorID=> bA1PwrErrorId);
+	
+IF bA1PwrError THEN
+	bA1PwrErrorLatch := TRUE;
+	bA1PwrErrorIdLatch := bA1PwrErrorId; 
+END_IF
+	
+IF bA1Reset THEN
+	bA1PwrErrorLatch := FALSE;
+	bA1PwrErrorIdLatch := 0; 
+END_IF
+
+
+
+A1Reset(
+	Axis:= A1, 
+	Execute:= bA1Reset, 
+	Done=> bA1ResetDone, 
+	Busy=> bA1ResetBusy, 
+	Error=> bA1Error, 
+	ErrorID=> bA1ErrorId);
+
+A1Jog(
+	Axis:= A1, 
+	JogForward:= bA1JogFwd, 
+	JogBackwards:= bA1JogRev, 
+	Mode:= bA1JogMode, 
+	Position:= bA1JogPosition, 
+	Velocity:= bA1JogVelocity, 
+	Acceleration:= bA1JogAccel, 
+	Deceleration:= bA1JogDecel, 
+	Jerk:= bA1JogJerk, 
+	Done=> bA1JogDone, 
+	Busy=> bA1JogBusy, 
+	Active=> bA1JogActive, 
+	CommandAborted=> bA1JogCmdAborted, 
+	Error=> bA1JogError, 
+	ErrorID=> bA1JogErrorId);
+	
+IF bA1Reset THEN
+	bA1Reset := FALSE;
+END_IF
+
+]]></ST>
+    </Implementation>
+    <Action Name="Scale" Id="{643730c7-bcab-4b54-a533-28155460e761}">
+      <Implementation>
+        <ST><![CDATA[_SpeedOverride := (100.0 / 32767.0)*GVLStdIO._PotInput;]]></ST>
+      </Implementation>
+    </Action>
+  </POU>
+</TcPlcObject>
