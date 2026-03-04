@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4026.20" ClassName="CDevEtherCATDef" SubType="111">
+	<Device Id="1" DevType="111" DevFlags="#x0003" AmsPort="28673" AmsNetId="169.254.243.188.2.1" RemoteName="Device 1 (EtherCAT)" InfoImageId="3">
+		<Name>__FILENAME__</Name>
+		<AddressInfo>
+			<Pnp>
+				<DeviceDesc>Ethernet (TwinCAT-Intel PCI Ethernet Adapter (Gigab</DeviceDesc>
+				<DeviceName>\DEVICE\{B5794A85-C8BD-4D00-8E8F-4A04B0AED9D8}</DeviceName>
+				<DeviceData>00010593f158</DeviceData>
+			</Pnp>
+		</AddressInfo>
+		<Image Id="2" AddrType="9" ImageType="3">
+			<Name>Image</Name>
+		</Image>
+		<Image Id="4" AddrType="10" ImageType="3">
+			<Name>Image-2</Name>
+		</Image>
+		<Box File="Term 1 (EK1101).xti" Id="1">
+			<EtherCAT PortABoxInfo="#x00ffffff"/>
+		</Box>
+		<Box File="Term 4 (AX8620-0000-0105).xti" Id="4">
+			<EtherCAT PortABoxInfo="#x01000003"/>
+		</Box>
+		<EtherCAT DcSyncMode="3"/>
+	</Device>
+	<Mappings>
+		<OwnerA>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)">
+				<Link VarA="Term 1 (EK1101)^Term 2 (EL1904)^Module 1 (FSOES)^RxPDO^FSOE" VarB="Term 4 (AX8620-0000-0105)^Drive 5 (AX8206-0210-0107)^Device (Safety)^FSoE Master Connection 1 Master Message^Message_3"/>
+				<Link VarA="Term 1 (EK1101)^Term 2 (EL1904)^Module 1 (FSOES)^TxPDO^FSOE" VarB="Term 4 (AX8620-0000-0105)^Drive 5 (AX8206-0210-0107)^Device (Safety)^FSoE Master Connection 1 Slave Message^Message_3"/>
+				<Link VarA="Term 4 (AX8620-0000-0105)^Drive 5 (AX8206-0210-0107)^Device (Safety)^FSoE Master Connection 1 Master Message^Message_3" VarB="Term 1 (EK1101)^Term 2 (EL1904)^Module 1 (FSOES)^RxPDO^FSOE"/>
+				<Link VarA="Term 4 (AX8620-0000-0105)^Drive 5 (AX8206-0210-0107)^Device (Safety)^FSoE Master Connection 1 Slave Message^Message_3" VarB="Term 1 (EK1101)^Term 2 (EL1904)^Module 1 (FSOES)^TxPDO^FSOE"/>
+				<Link VarA="Term 4 (AX8620-0000-0105)^Drive 5 (AX8206-0210-0107)^Device (Safety)^FSoE Master Connection 2 Master Message^Message_5" VarB="Term 4 (AX8620-0000-0105)^Drive 6 (AX8206-0200-0106)^Device (Safety)^FSoE Slave Connection 1 Master Message^FSOE"/>
+				<Link VarA="Term 4 (AX8620-0000-0105)^Drive 5 (AX8206-0210-0107)^Device (Safety)^FSoE Master Connection 2 Slave Message^Message_5" VarB="Term 4 (AX8620-0000-0105)^Drive 6 (AX8206-0200-0106)^Device (Safety)^FSoE Slave Connection 1 Slave Message^FSOE"/>
+				<Link VarA="Term 4 (AX8620-0000-0105)^Drive 5 (AX8206-0210-0107)^Device^DeviceMain Outputs^Power supply controlword" VarB="Term 4 (AX8620-0000-0105)^PSM Controlword for axis^Controlword for axis"/>
+				<Link VarA="Term 4 (AX8620-0000-0105)^Drive 6 (AX8206-0200-0106)^Device (Safety)^FSoE Slave Connection 1 Master Message^FSOE" VarB="Term 4 (AX8620-0000-0105)^Drive 5 (AX8206-0210-0107)^Device (Safety)^FSoE Master Connection 2 Master Message^Message_5"/>
+				<Link VarA="Term 4 (AX8620-0000-0105)^Drive 6 (AX8206-0200-0106)^Device (Safety)^FSoE Slave Connection 1 Slave Message^FSOE" VarB="Term 4 (AX8620-0000-0105)^Drive 5 (AX8206-0210-0107)^Device (Safety)^FSoE Master Connection 2 Slave Message^Message_5"/>
+				<Link VarA="Term 4 (AX8620-0000-0105)^Drive 6 (AX8206-0200-0106)^Device^DeviceMain Outputs^Power supply controlword" VarB="Term 4 (AX8620-0000-0105)^PSM Controlword for axis^Controlword for axis"/>
+				<Link VarA="Term 4 (AX8620-0000-0105)^PSM Controlword for axis^Controlword for axis" VarB="Term 4 (AX8620-0000-0105)^Drive 5 (AX8206-0210-0107)^Device^DeviceMain Outputs^Power supply controlword"/>
+				<Link VarA="Term 4 (AX8620-0000-0105)^PSM Controlword for axis^Controlword for axis" VarB="Term 4 (AX8620-0000-0105)^Drive 6 (AX8206-0200-0106)^Device^DeviceMain Outputs^Power supply controlword"/>
+			</OwnerB>
+		</OwnerA>
+	</Mappings>
+</TcSmItem>

@@ -179,26 +179,29 @@
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
+    <PlaceholderResolution Include="CmpDynamicText">
+      <Resolution>CmpDynamicText, * (System)</Resolution>
+    </PlaceholderResolution>
     <PlaceholderResolution Include="SPT Base Types">
-      <Resolution>SPT Base Types, 4.0.3 (Beckhoff Automation LLC)</Resolution>
+      <Resolution>SPT Base Types, * (Beckhoff Automation LLC)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="SPT Components">
-      <Resolution>SPT Components, 4.0.3 (Beckhoff Automation LLC)</Resolution>
+      <Resolution>SPT Components, * (Beckhoff Automation LLC)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="SPT Diagnostic">
-      <Resolution>SPT Diagnostic, 4.0.1 (Beckhoff Automation LLC)</Resolution>
+      <Resolution>SPT Diagnostic, * (Beckhoff Automation LLC)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="SPT EtherCat">
-      <Resolution>SPT EtherCat, 4.0.1 (Beckhoff Automation LLC)</Resolution>
+      <Resolution>SPT EtherCat, * (Beckhoff Automation LLC)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="SPT Event Logger">
-      <Resolution>SPT Event Logger, 4.0.0 (Beckhoff Automation LLC)</Resolution>
+      <Resolution>SPT Event Logger, * (Beckhoff Automation LLC)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="SPT Motion Control">
       <Resolution>SPT Motion Control, * (Beckhoff Automation LLC)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="SPT Utilities">
-      <Resolution>SPT Utilities, 4.0.2 (Beckhoff Automation LLC)</Resolution>
+      <Resolution>SPT Utilities, * (Beckhoff Automation LLC)</Resolution>
     </PlaceholderResolution>
     <PlaceholderResolution Include="System_VisuElemMeter">
       <Resolution>VisuElemMeter, * (System)</Resolution>
@@ -220,6 +223,57 @@
     </PlaceholderResolution>
     <PlaceholderResolution Include="System_VisuNativeControl">
       <Resolution>VisuNativeControl, * (System)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc2_Drive">
+      <Resolution>Tc2_Drive, * (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc2_EtherCAT">
+      <Resolution>Tc2_EtherCAT, * (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc2_IoFunctions">
+      <Resolution>Tc2_IoFunctions, * (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc2_Math">
+      <Resolution>Tc2_Math, * (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc2_MC2">
+      <Resolution>Tc2_MC2, * (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc2_MC2_Camming">
+      <Resolution>Tc2_MC2_Camming, * (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc2_MC2_Drive">
+      <Resolution>Tc2_MC2_Drive, * (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc2_Standard">
+      <Resolution>Tc2_Standard, * (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc2_System">
+      <Resolution>Tc2_System, * (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc2_Utilities">
+      <Resolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc3_EventLogger">
+      <Resolution>Tc3_EventLogger, * (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc3_JsonXml">
+      <Resolution>Tc3_JsonXml, * (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc3_MC2_AdvancedHoming">
+      <Resolution>Tc3_MC2_AdvancedHoming, * (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc3_McCollisionAvoidance">
+      <Resolution>Tc3_McCollisionAvoidance, * (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc3_McCoordinatedMotion">
+      <Resolution>Tc3_McCoordinatedMotion, * (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc3_Module">
+      <Resolution>Tc3_Module, * (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc3_PackML_V3">
+      <Resolution>Tc3_PackML_V3, * (Beckhoff Automation GmbH)</Resolution>
     </PlaceholderResolution>
   </ItemGroup>
   <ItemGroup>

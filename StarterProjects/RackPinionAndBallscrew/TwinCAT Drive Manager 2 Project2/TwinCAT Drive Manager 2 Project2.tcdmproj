@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Name>Drive Manager 2</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{86d3d9df-d35e-4724-8b78-578ed1a750ec}</ProjectGuid>
+    <TcPath>..\SPT_SimpleMachine\IntermediateMotionDemo.tsproj</TcPath>
+    <AssemblyName>TwinCAT Drive Manager 2 Project2</AssemblyName>
+    <RootNamespace>TwinCAT Drive Manager 2 Project2</RootNamespace>
+    <SaveDriveDataAsFiles>False</SaveDriveDataAsFiles>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Term 4 %28AX8620-0000-0105%29.tcdmdrv">
+      <SubType>Content</SubType>
+      <IoItemPathName>TIID^Device 1 (EtherCAT)^Term 4 (AX8620-0000-0105)</IoItemPathName>
+    </Content>
+    <Content Include="Term 4 %28AX8620-0000-0105%29\Drive 5 %28AX8206-0210-0107%29.tcdmdrv">
+      <SubType>Content</SubType>
+      <DependentUpon>Term 4 (AX8620-0000-0105).tcdmdrv</DependentUpon>
+      <IoItemPathName>TIID^Device 1 (EtherCAT)^Term 4 (AX8620-0000-0105)^Drive 5 (AX8206-0210-0107)</IoItemPathName>
+    </Content>
+    <Content Include="Term 4 %28AX8620-0000-0105%29\Drive 6 %28AX8206-0200-0106%29.tcdmdrv">
+      <SubType>Content</SubType>
+      <DependentUpon>Term 4 (AX8620-0000-0105).tcdmdrv</DependentUpon>
+      <IoItemPathName>TIID^Device 1 (EtherCAT)^Term 4 (AX8620-0000-0105)^Drive 6 (AX8206-0200-0106)</IoItemPathName>
+    </Content>
+  </ItemGroup>
+</Project>
